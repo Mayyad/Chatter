@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package chatterserver;
+import serverSocket.*;
 
 /**
  *
@@ -15,7 +16,11 @@ public class Chatter {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        ServerSocketHandler serverSocketHandler=new ServerSocketHandler(12345);
+        
+        MainPage mainPage=new MainPage();
+        mainPage.setVisible(true);
     }
     
 }

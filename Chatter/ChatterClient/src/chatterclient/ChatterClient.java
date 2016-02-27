@@ -5,6 +5,8 @@
  */
 package chatterclient;
 
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import socketHandler.*;
 /**
  *
  * @author ahmedsobhy
@@ -15,7 +17,15 @@ public class ChatterClient {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        ClientSocket socket=new ClientSocket("localhost",12345);
+        
+        
+        
+        Login l=new Login();
+        l.setVisible(true);
+        
+        l.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
     
 }

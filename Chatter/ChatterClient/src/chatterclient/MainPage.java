@@ -5,8 +5,11 @@
  */
 package chatterclient;
 
+import java.net.Socket;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import socketHandler.ClientSocket;
+import socketHandler.ClientSocketHandler;
 
 /**
  *
@@ -62,8 +65,8 @@ public class MainPage extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTextArea4 = new javax.swing.JTextArea();
-        jButton2 = new javax.swing.JButton();
+        msgTA = new javax.swing.JTextArea();
+        sendBtn = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton4 = new javax.swing.JButton();
@@ -253,11 +256,16 @@ public class MainPage extends javax.swing.JFrame {
         jTextArea3.setRows(5);
         jScrollPane4.setViewportView(jTextArea3);
 
-        jTextArea4.setColumns(20);
-        jTextArea4.setRows(5);
-        jScrollPane5.setViewportView(jTextArea4);
+        msgTA.setColumns(20);
+        msgTA.setRows(5);
+        jScrollPane5.setViewportView(msgTA);
 
-        jButton2.setText("Send");
+        sendBtn.setText("Send");
+        sendBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendBtnActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Send File");
 
@@ -272,7 +280,7 @@ public class MainPage extends javax.swing.JFrame {
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(sendBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)))
                     .addComponent(jScrollPane4))
                 .addContainerGap())
@@ -286,7 +294,7 @@ public class MainPage extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(sendBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton5)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -400,6 +408,11 @@ public class MainPage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void sendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtnActionPerformed
+      String msg =  msgTA.getText();
+      
+    }//GEN-LAST:event_sendBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -440,7 +453,6 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JList<String> friendList;
     private javax.swing.JList<String> friendList1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -479,9 +491,10 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
-    private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextArea jTextArea5;
     private javax.swing.JTextArea jTextArea6;
+    private javax.swing.JTextArea msgTA;
+    private javax.swing.JButton sendBtn;
     private javax.swing.JLabel userPic;
     // End of variables declaration//GEN-END:variables
 }

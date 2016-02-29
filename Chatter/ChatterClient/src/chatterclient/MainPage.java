@@ -411,8 +411,8 @@ public class MainPage extends javax.swing.JFrame {
 
     private void sendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtnActionPerformed
       String msg =  msgTA.getText();
-      try{
-        handler.ps.println(msg);
+      try{ 
+        handler.ps.println("2"+msg);
       }catch(Exception e){
           System.out.println("error");
       }

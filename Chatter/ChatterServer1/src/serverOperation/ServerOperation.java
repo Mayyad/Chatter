@@ -59,7 +59,5 @@ public class ServerOperation {
     }
     
     //contact list  --ayaad
-    public  contactList(){
-        
-    }
+   
 }

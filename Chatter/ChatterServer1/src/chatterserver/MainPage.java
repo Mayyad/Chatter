@@ -4,18 +4,21 @@
  * and open the template in the editor.
  */
 package chatterserver;
-
+import serverSocketHandler.ServerSocketHandler;
 /**
  *
  * @author ahmedsobhy
  */
 public class MainPage extends javax.swing.JFrame {
 
+    ServerSocketHandler handler;
+    
     /**
      * Creates new form MainPage
      */
     public MainPage() {
         initComponents();
+        handler = new ServerSocketHandler(12345);
     }
 
     /**

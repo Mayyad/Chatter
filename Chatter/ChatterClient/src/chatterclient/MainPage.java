@@ -8,20 +8,21 @@ package chatterclient;
 import java.net.Socket;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
-import socketHandler.ClientSocket;
 import socketHandler.ClientSocketHandler;
-
+import socketHandler.*;
 /**
  *
  * @author ahmedsobhy
  */
 public class MainPage extends javax.swing.JFrame {
 
+    ClientSocketHandler handler;
     /**
      * Creates new form MainPage
      */
     public MainPage() {
         initComponents();
+        handler=new ClientSocketHandler();
         
     }
 
@@ -410,6 +411,12 @@ public class MainPage extends javax.swing.JFrame {
 
     private void sendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtnActionPerformed
       String msg =  msgTA.getText();
+      try{
+        handler.ps.println(msg);
+      }catch(Exception e){
+          System.out.println("error");
+      }
+      System.out.println("done click");
       
     }//GEN-LAST:event_sendBtnActionPerformed
 

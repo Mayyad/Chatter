@@ -9,24 +9,25 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author ahmedsobhy
  */
 public class ClientSocketHandler extends Thread{
-    DataInputStream dis;
-    PrintStream ps;
-    ClientSocket clientSocket;
     
-    public ClientSocketHandler(Socket s){
+    public Socket socket;
+    public DataInputStream dis;
+    public PrintStream ps;
+    
+    public ClientSocketHandler(){
        
         try {
-            dis=new DataInputStream(s.getInputStream());
-            ps=new PrintStream(s.getOutputStream());
+            socket=new Socket("localhost",12345);
+            dis=new DataInputStream(socket.getInputStream());
+            ps=new PrintStream(socket.getOutputStream());
         } catch (IOException ex) {
+            System.err.println("error");
         }
         start();
     }
@@ -40,7 +41,17 @@ public class ClientSocketHandler extends Thread{
             } catch (IOException ex) {
             }
         }
-    }
+    }  
+    
+    @Override
+    public void destroy(){
+            try {
+                dis.close();
+                ps.close();
+            } catch (IOException ex) {
+
+            }
+        }
     
     void sendMsg(String msg){
         ps.println(msg);

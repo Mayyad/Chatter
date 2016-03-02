@@ -17,8 +17,8 @@ import java.net.Socket;
 public class ClientSocketHandler extends Thread{
     
     public Socket socket;
-    public DataInputStream dis;
-    public PrintStream ps;
+    public DataInputStream dis; //bystlm
+    public PrintStream ps;   //byb3t
     
     public ClientSocketHandler(){
        

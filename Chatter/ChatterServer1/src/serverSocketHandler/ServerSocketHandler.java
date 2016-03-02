@@ -5,13 +5,17 @@
  */
 package serverSocketHandler;
 
+import DBConnections.DBConnection;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -85,7 +89,47 @@ public class ServerSocketHandler {
                         System.out.println("message");
                         
                         System.out.println(str); 
-                    }else{
+                            
+                    }
+                    else if(ch=='3'){
+                        
+                        System.out.println("login");
+                        
+                        String[] parts = str.split("\\$");
+                        
+                        String id   = parts[0];
+                        String email= parts[1];
+                        String pass = parts[2];
+                        System.out.println(id);
+                        System.out.println(email);
+                        System.out.println(pass);
+                        
+                        
+                        dbConn = new DBConnections.DBConnection();
+                        Statement stmt = dbConn.connection.createStatement();
+                        String query  = "select * from users where email= ? and password = ? ";
+      
+                        PreparedStatement  pstmt = dbConn.connection.prepareStatement(query);
+                        pstmt.setString(1, email);
+                        pstmt.setString(2, pass);
+                        ResultSet rs=pstmt.executeQuery();
+                        
+                        if(rs.next()){
+                            System.out.println("user exists");
+                            System.out.println(" \n congratulations !");
+                            ps.println("1");
+                        }else{
+                            System.out.println("Not Found");
+                            ps.println("0");
+                        }
+                        
+                        
+                        
+                        
+                                              
+                        //System.out.println(str);
+                    }
+                    else{
                         System.out.println("nothing");
                     }
                                       

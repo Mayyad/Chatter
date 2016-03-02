@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package chatterserver;
+import serverOperation.ServerOperation;
 import serverSocketHandler.ServerSocketHandler;
 /**
  *
@@ -12,6 +13,7 @@ import serverSocketHandler.ServerSocketHandler;
 public class MainPage extends javax.swing.JFrame {
 
     ServerSocketHandler handler;
+    serverOperation.ServerOperation operationObj;
     
     /**
      * Creates new form MainPage
@@ -19,6 +21,7 @@ public class MainPage extends javax.swing.JFrame {
     public MainPage() {
         initComponents();
         handler = new ServerSocketHandler(12345);
+        operationObj= new ServerOperation();
     }
 
     /**
@@ -54,6 +57,7 @@ public class MainPage extends javax.swing.JFrame {
         sendBtn = new javax.swing.JButton();
         MenuBar = new javax.swing.JMenuBar();
         file = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         info = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -219,6 +223,10 @@ public class MainPage extends javax.swing.JFrame {
         MainTabbedPane.addTab("Send Announcment", jPanel1);
 
         file.setText("File");
+
+        jMenuItem1.setText("Exit");
+        file.add(jMenuItem1);
+
         MenuBar.add(file);
 
         info.setText("Edit");
@@ -291,6 +299,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

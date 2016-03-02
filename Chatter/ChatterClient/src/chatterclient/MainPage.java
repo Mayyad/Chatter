@@ -17,12 +17,24 @@ import socketHandler.*;
 public class MainPage extends javax.swing.JFrame {
 
     ClientSocketHandler handler;
-    /**
-     * Creates new form MainPage
-     */
+    
+    String userName ;
+    
+    public void setUserNamelbl(String name){
+        //userName=name;
+        this.userNameLbl.setText(name);
+    }
+    
+    String getUserNamelbl(){
+        return userName;
+    }
+    
+    
+    
     public MainPage() {
         initComponents();
         handler=new ClientSocketHandler();
+        userNameLbl.setText(getUserNamelbl());
         
     }
 
@@ -46,7 +58,7 @@ public class MainPage extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         userPic = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        userNameLbl = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -83,7 +95,7 @@ public class MainPage extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         MainPanel.setLayout(new java.awt.BorderLayout(3, 3));
 
@@ -160,7 +172,7 @@ public class MainPage extends javax.swing.JFrame {
         userPic.setForeground(new java.awt.Color(191, 68, 68));
         userPic.setText("User Pic");
 
-        jLabel2.setText("User Name");
+        userNameLbl.setText("User Name");
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -322,7 +334,7 @@ public class MainPage extends javax.swing.JFrame {
                         .addComponent(userPic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(22, 22, 22))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(userNameLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
@@ -339,7 +351,7 @@ public class MainPage extends javax.swing.JFrame {
                 .addComponent(userPic, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
+                    .addComponent(userNameLbl)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addComponent(jButton4)
@@ -467,7 +479,6 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
@@ -502,6 +513,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea6;
     private javax.swing.JTextArea msgTA;
     private javax.swing.JButton sendBtn;
+    private javax.swing.JLabel userNameLbl;
     private javax.swing.JLabel userPic;
     // End of variables declaration//GEN-END:variables
 }

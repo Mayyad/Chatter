@@ -462,13 +462,15 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void sendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtnActionPerformed
-        String msg =  msgTA.getText();
-        try{
-            handler.ps.println(msg);
-        }catch(Exception e){
-            System.out.println("error");
-        }
-        System.out.println("done click");
+
+      String msg =  msgTA.getText();
+      try{ 
+        handler.ps.println("2"+msg);
+      }catch(Exception e){
+          System.out.println("error");
+      }
+      System.out.println("done click");
+      
     }//GEN-LAST:event_sendBtnActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed

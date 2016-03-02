@@ -61,16 +61,18 @@ public class ServerSocketHandler {
         public void run(){
             while(true){
                 try {
+                    String str=dis.readLine();
+                    char ch=str.charAt(0);
+                    System.out.println(ch);
                     
-                    if(dis.readLine().equals("1")){
-                        System.out.println("register");
-                        
+                    if(ch=='1'){
+                        System.out.println("register");                        
                         //put it into register function .. it's working now :) 
                         dbConn = new DBConnections.DBConnection();
-                        Statement stm = dbConn.connection.createStatement();
-                        
-                        String str = dis.readLine();
-                        ;
+                        Statement stm = dbConn.connection.createStatement();                        
+                     
+                        System.out.println(str);
+                        str=str.replaceFirst("1", "");
                         System.out.println(str);
                         String query = "INSERT INTO users( name, password, email,gender,age) VALUES("+str+",12"+")";
                         
@@ -79,9 +81,12 @@ public class ServerSocketHandler {
                         
                         System.out.println(str);    
                     }
-                    else{
-                        String str = dis.readLine();
+                    else if(ch=='2'){
+                        System.out.println("message");
+                        
                         System.out.println(str); 
+                    }else{
+                        System.out.println("nothing");
                     }
                                       
                     

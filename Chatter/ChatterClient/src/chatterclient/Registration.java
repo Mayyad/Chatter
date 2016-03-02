@@ -186,9 +186,8 @@ public class Registration extends javax.swing.JFrame {
                 if(email.length() > 5){
                     String value= "'"+ userName +"'" +","+"'"+userPass +"'"+ ","+"'" + email+"'"+","+"'male'";
                     try{
-                        handler.ps.println("1");
                         //send the values to the server to register new user 
-                        handler.ps.println(value);
+                        handler.ps.println("1"+value);
                     }catch(Exception e){
                         
                     }

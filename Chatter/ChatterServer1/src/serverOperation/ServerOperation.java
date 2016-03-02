@@ -63,7 +63,7 @@ public class ServerOperation {
     }
     
     //contact list  --ayaad
-<<<<<<< HEAD
+
     public String contactList(int id){
         
        dbConnection = new DBConnections.DBConnection();
@@ -196,8 +196,4 @@ public class ServerOperation {
         return name ;
     }
     
-    
-=======
-   
->>>>>>> e545168615c0dcc9f7a7ed61c2ea195ca9b56292
 }

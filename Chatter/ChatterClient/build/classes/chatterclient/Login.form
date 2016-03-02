@@ -99,11 +99,15 @@
                                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
+<<<<<<< HEAD
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="emailTF" max="32767" attributes="0"/>
                                   <Component id="passwordTF" pref="190" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+=======
+                              <Component id="jPasswordField1" pref="307" max="32767" attributes="0"/>
+>>>>>>> 57bca9548fc0ae0a95adaed16d9b286637be61b9
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -134,7 +138,11 @@
                       <Component id="loginBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" pref="29" max="-2" attributes="0"/>
+<<<<<<< HEAD
                       <EmptySpace max="32767" attributes="0"/>
+=======
+                      <EmptySpace pref="66" max="32767" attributes="0"/>
+>>>>>>> 57bca9548fc0ae0a95adaed16d9b286637be61b9
                   </Group>
               </Group>
             </DimensionLayout>
@@ -172,6 +180,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="click here to register "/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel4MouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

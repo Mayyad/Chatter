@@ -58,7 +58,7 @@ public class ClientSocketHandler extends Thread{
                     loginObj.setVisible(false);
                     
                     //userNameLbl.setText("User Name");
-                    mainPageObj.setUserNamelbl("xxx");
+                   // mainPageObj.setUserNamelbl("xxx");
                        
                 }
                 else if(ch=='0'){

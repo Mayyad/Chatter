@@ -399,6 +399,11 @@ public class MainPage extends javax.swing.JFrame {
         jMenu2.setText("Help");
 
         jMenuItem3.setText("About us");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuBar1.add(jMenu2);
@@ -465,6 +470,18 @@ public class MainPage extends javax.swing.JFrame {
         }
         System.out.println("done click");
     }//GEN-LAST:event_sendBtnActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        JFrame frame = new JFrame();
+        String friendmail = JOptionPane.showInputDialog(
+            frame,
+            "All Rights ",
+            "About us ",
+            JOptionPane.PLAIN_MESSAGE
+        );
+        
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments

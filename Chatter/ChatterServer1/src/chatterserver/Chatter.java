@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package chatterserver;
+import serverOperation.ServerOperation;
 import serverSocket.*;
 
 /**
@@ -17,10 +18,13 @@ public class Chatter {
      */
     public static void main(String[] args) {
         
-        ServerSocketHandler serverSocketHandler=new ServerSocketHandler(12345);
+        //ServerSocketHandler serverSocketHandler=new ServerSocketHandler(12345);
         
-        MainPage mainPage=new MainPage();
-        mainPage.setVisible(true);
+        //MainPage mainPage=new MainPage();
+        //mainPage.setVisible(true);
+        ServerOperation s = new ServerOperation();
+        System.out.println(s.returnName(2));
+        
     }
     
 }

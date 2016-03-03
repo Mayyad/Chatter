@@ -70,24 +70,23 @@ public class ServerSocketHandler {
                     System.out.println(ch);
                     
                     if(ch=='1'){
-                        System.out.println("register");                        
-                        //put it into register function .. it's working now :) 
-                        dbConn = new DBConnections.DBConnection();
-                        Statement stm = dbConn.connection.createStatement();                        
-                     
-                        System.out.println(str);
                         str=str.replaceFirst("1", "");
-                        System.out.println(str);
-                        String query = "INSERT INTO users( name, password, email,gender,age) VALUES("+str+",12"+")";
-                        
-                        stm.execute(query);
-                        System.out.println("done");
-                        
-                        System.out.println(str);    
+                        boolean isMailHere = operation.register(str);
+                        System.out.println(isMailHere);
+                        if(isMailHere){
+                            //done registration
+                            System.out.println("true1");
+                        }else{
+                            //email here .. please enter another email
+                            ps.println("f");
+                        }  
                     }
                     else if(ch=='2'){
                         System.out.println("message");
+                        str=str.replaceFirst("2", "");
                         
+                        //from-to id's and message
+                        operation.sendMessage("1", "2", str);
                         System.out.println(str); 
                             
                     }
@@ -151,8 +150,9 @@ public class ServerSocketHandler {
             try {
                 dis.close();
                 ps.close();
+                ss.close();
             } catch (IOException ex) {
-
+                System.out.println("server down");
             }
         }
     }

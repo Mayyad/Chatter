@@ -176,33 +176,68 @@ public class Registration extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordTFActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
-        String userName=userNameTF.getText();
+         String userName=userNameTF.getText();
         String userPass = passwordTF.getText();
         String email = emailTF.getText();
         
         
         if(userName.length() > 5 ){
             if(userPass.length() > 5){
-                if(email.length() > 5){
-                    String value= "'"+ userName +"'" +","+"'"+userPass +"'"+ ","+"'" + email+"'"+","+"'male'";
+                if(isValidEmail(email)){
                     try{
-                        //send the values to the server to register new user 
-                        handler.ps.println("1"+value);
-                    }catch(Exception e){
-                        
-                    }
+                        int age=Integer.parseInt(ageTF.getText());
+                        if(age >= 18 && age <= 100){
+                            String gender="";
+                            if(femaleRBtn.isSelected()){
+                                gender="female";
+                                String value= "'"+ userName +"'" +",'"+userPass +"'"+ ",'" + email+"',"+"'"+gender+"','"+age+"'";
+                                try{
+                                    handler.ps.println("1"+value);
+                                }catch(Exception e){
+                                        showMessage("something went wrong .. try again later");
+                                }
+                            }else if(maleRBtn.isSelected()){
+                                gender="male";
+                                String value= "'"+ userName +"'" +",'"+userPass +"'"+ ",'" + email+"',"+"'"+gender+"','"+age+"'";
+                                try{
+                                    handler.ps.println("1"+value);
+                                }catch(Exception e){
+                                        showMessage("something went wrong .. try again later");
+                                }
+                            }else{
+                                showMessage("please choose gender");            
+                            }
+                             
+                        }else{
+                             showMessage("enter valid age between 18 and 100");  
+                        }
+                         
+                    }catch(NumberFormatException ex){
+                        showMessage("Please asign number into age");
+                    }                  
                    
                 }else{
-                    //email check 
+                    showMessage("Please enter a valid email");
                 }
             }else{
-                //pass <5
+                showMessage("please  enter valid pass");
             }
         }else{
-            //user name <5
+            showMessage("please  enter valid name");
         }
     }//GEN-LAST:event_registerBtnActionPerformed
 
+     public boolean isValidEmail(String email){
+        String pattern="^[a-zA-Z0-9]+@[a-zA-Z]{3,7}.[a-zA-Z]{2,5}";
+        Pattern p=Pattern.compile(pattern);
+        Matcher m=p.matcher(email);
+        
+        return m.matches();
+    }
+    
+    public void showMessage(String msg){
+        JOptionPane.showMessageDialog(this,msg);
+    }
     /**
      * @param args the command line arguments
      */

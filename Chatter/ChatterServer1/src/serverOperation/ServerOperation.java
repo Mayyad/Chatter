@@ -129,7 +129,7 @@ public class ServerOperation {
                 while (fl.next())
                 {
                     grplst += fl.getString("group_name");
-                    grplst += "\n";
+                    grplst += "*";
                 }
             }
             

@@ -29,8 +29,8 @@ public class MainPage extends javax.swing.JFrame {
      */
     public MainPage() {
         initComponents();
-        handler = new ServerSocketHandler(12345);
-        operationObj= new ServerOperation();
+       // handler = new ServerSocketHandler(12345);
+       // operationObj= new ServerOperation();
     }
 
     /**
@@ -46,7 +46,7 @@ public class MainPage extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jToggleButton2 = new javax.swing.JToggleButton();
-        jLabel3 = new javax.swing.JLabel();
+        serverStatusLbl = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -80,8 +80,18 @@ public class MainPage extends javax.swing.JFrame {
         });
 
         jToggleButton2.setText("On/Off");
+        jToggleButton2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jToggleButton2ItemStateChanged(evt);
+            }
+        });
+        jToggleButton2.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jToggleButton2StateChanged(evt);
+            }
+        });
 
-        jLabel3.setText("Server Status");
+        serverStatusLbl.setText("Server Status");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -90,7 +100,7 @@ public class MainPage extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(59, 59, 59)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(serverStatusLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(162, Short.MAX_VALUE))
         );
@@ -100,7 +110,7 @@ public class MainPage extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addComponent(jToggleButton2)
                 .addGap(29, 29, 29)
-                .addComponent(jLabel3)
+                .addComponent(serverStatusLbl)
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -325,16 +335,20 @@ public class MainPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_sendAnouncmentBtnActionPerformed
 
-     private void jToggleButton2ItemStateChanged(java.awt.event.ItemEvent evt) {                                                
+    private void jToggleButton2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jToggleButton2StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jToggleButton2StateChanged
+
+    private void jToggleButton2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jToggleButton2ItemStateChanged
         int statue = evt.getStateChange();
+        
         if(statue==1){
-            //on
-           // handler = new ServerSocketHandler(12345);
-            //serverStatusLbl.setText("Server On");
+            handler = new ServerSocketHandler(12345);
+            serverStatusLbl.setText("Server On");
+            System.out.print("on");
         }else{
            // try {
-                //off
-                
+               serverStatusLbl.setText("Server Off");
                 //handler.ss.close();
                 
          //   } catch (IOException ex) {
@@ -342,7 +356,8 @@ public class MainPage extends javax.swing.JFrame {
            // }
                
         }
-    }                
+    }//GEN-LAST:event_jToggleButton2ItemStateChanged
+  
 
     /**
      * @param args the command line arguments
@@ -390,7 +405,6 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
@@ -408,5 +422,6 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JLabel offlineUsrCountLbl;
     private javax.swing.JLabel onlineUsrCountLbl;
     private javax.swing.JButton sendAnouncmentBtn;
+    private javax.swing.JLabel serverStatusLbl;
     // End of variables declaration//GEN-END:variables
 }

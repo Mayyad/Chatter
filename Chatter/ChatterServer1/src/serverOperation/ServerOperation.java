@@ -37,24 +37,35 @@ public class ServerOperation {
     }
     
     //register insert data 
-    public void register(){
+     public boolean register(String str){
         try {
             //check email validation then insert into database
-            stm.execute("INSERT ");
+            System.out.println("done");                                
+            stm = dbConnection.connection.createStatement();                        
+                                            
+            String query = "INSERT INTO users( name, password, email,gender,age) VALUES("+str+")";
+         
+            stm.execute(query);           
+            
+            stm.close();
+            dbConnection.connection.close();
+            return true;
         } catch (SQLException ex) {
-
+            
+            return false;
         }
     }
-    
-    //validate email it's unique
-    public void validateEmail(){
-    
-    }
-    
     //send message from to 
     public void sendMessage(String from,String to,String msg){
-        //insert into database 
-        //send the message to the target
+        try {
+            //insert into database
+            String query="INSERT INTO messages(from_id,to_id,msg_txt) VALUES("+"'"+from+"'"+","+"'"+to+"'"+","+"'"+msg+"'"+")   ";
+            stm.execute(query);
+            
+            //send the message to the target
+        } catch (SQLException ex) {
+            System.out.println("error");
+        }
     }
     
     //list the all friends of the user

@@ -66,12 +66,16 @@ public class ClientSocketHandler extends Thread{
                     System.out.println("mesh mawgood");
                     JOptionPane.showMessageDialog(null, "Not found");
                     
+                }else if(msg.equals("f")){
+                    System.out.println("Email Registered Before .. Please Enter Another one..");                    
+                    JOptionPane.showMessageDialog(new Registration(), "Email here please enter another email !!");
                 }
                 else{
                     System.out.println("nothing");
                 }
                 System.out.println(msg);
             } catch (IOException ex) {
+                System.out.println("error");
             }
         }
     }  

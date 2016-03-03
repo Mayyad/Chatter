@@ -18,6 +18,7 @@ import java.sql.Statement;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import serverOperation.ServerOperation;
 
 /**
  *
@@ -27,6 +28,10 @@ public class ServerSocketHandler {
     
     ServerSocket ss;
     DBConnections.DBConnection dbConn;
+    //serverOperation.ServerOperation operation ;
+    serverOperation.ServerOperation operation;
+    
+    serverOperation.ServerOperation operationX;
     
     public ServerSocketHandler(int port){
         try {
@@ -65,15 +70,22 @@ public class ServerSocketHandler {
         public void run(){
             while(true){
                 try {
+                    
                     String str=dis.readLine();
                     char ch=str.charAt(0);
                     System.out.println(ch);
                     
                     if(ch=='1'){
                         str=str.replaceFirst("1", "");
-                        boolean isMailHere = operation.register(str);
-                        System.out.println(isMailHere);
-                        if(isMailHere){
+                       
+                        //operation.register(str)
+                         operation=new ServerOperation();
+                         boolean isMailHere = operation.register(str);
+                        
+                         //boolean isMailHere;
+                         //isMailHere = operation.register(str);
+                         System.out.println(isMailHere);
+                         if(isMailHere){
                             //done registration
                             System.out.println("true1");
                         }else{
@@ -112,11 +124,27 @@ public class ServerSocketHandler {
                         pstmt.setString(1, email);
                         pstmt.setString(2, pass);
                         ResultSet rs=pstmt.executeQuery();
+                        //System.out.println(rs.getString(1)+"\t"+rs.getString(2));
                         
                         if(rs.next()){
+                            /*
+                            String updateQuery = "update users set status=1 where email = ? ";
+                            PreparedStatement pstmtUpdate=dbConn.connection.prepareStatement(updateQuery);
+                            pstmtUpdate.setString(1, email);
+                            stmt.executeUpdate(updateQuery);
+                            */
                             System.out.println("user exists");
                             System.out.println(" \n congratulations !");
-                            ps.println("1");
+                            int myid = rs.getInt("user_id");
+                            
+                            operationX = new ServerOperation();
+                            String myName = operationX.returnName(myid);
+                            String contactList = operationX.contactList(myid);
+                            
+                            System.out.println(myid);
+                            //System.out.println(contactList);
+                            ps.println("1"+"$"+myName+"$"+contactList);
+                           // handler.ps.println("3"+"$"+email+"$"+password);
                         }else{
                             System.out.println("Not Found");
                             ps.println("0");

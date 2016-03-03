@@ -53,7 +53,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel3.setText("jLabel3");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel2.setBackground(new java.awt.Color(236, 160, 241));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 18), new java.awt.Color(74, 78, 165))); // NOI18N
@@ -64,8 +64,6 @@ public class Login extends javax.swing.JFrame {
         emailTF.setToolTipText("User Name");
 
         jLabel2.setText("Password");
-
-        passwordTF.setText("jPasswordField1");
 
         loginBtn.setText("Login");
         loginBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -157,7 +155,8 @@ public class Login extends javax.swing.JFrame {
         String email    = emailTF.getText();
         String password = passwordTF.getText();
         
-        handler.ps.println("3"+"$"+email+"$"+password); // ($) the dollar sign is just a delimeter it doesnt mean anything 
+        handler.ps.println("3"+"$"+email+"$"+password);
+        this.dispose();// ($) the dollar sign is just a delimeter it doesnt mean anything 
         //handler.ps.println("1"+value);
         
     }//GEN-LAST:event_loginBtnActionPerformed

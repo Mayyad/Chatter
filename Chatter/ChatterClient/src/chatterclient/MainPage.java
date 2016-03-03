@@ -31,6 +31,8 @@ public class MainPage extends javax.swing.JFrame {
     public MainPage() {
         initComponents();
         handler=new ClientSocketHandler();
+        //userNameLbl.setText(getUserNamelbl());
+        usrNameLbl.setText(getUserNamelbl());
         
     }
 
@@ -46,7 +48,7 @@ public class MainPage extends javax.swing.JFrame {
         MainPanel = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         userPic = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        usrNameLbl = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -98,7 +100,7 @@ public class MainPage extends javax.swing.JFrame {
         userPic.setForeground(new java.awt.Color(191, 68, 68));
         userPic.setText("User Pic");
 
-        jLabel2.setText("User Name");
+        usrNameLbl.setText("User Name");
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -335,7 +337,7 @@ public class MainPage extends javax.swing.JFrame {
                         .addComponent(userPic, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(26, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(usrNameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
@@ -355,7 +357,7 @@ public class MainPage extends javax.swing.JFrame {
                         .addComponent(userPic, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
+                            .addComponent(usrNameLbl)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(44, 44, 44)
                         .addComponent(jButton4)
@@ -485,6 +487,21 @@ public class MainPage extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    
+     public void setUserNamelbl(String name){
+        //userName=name;
+        
+        this.usrNameLbl.setText(name);
+    }
+    
+     String userName;
+    String getUserNamelbl(){
+        return userName;
+    }
+    
+    
+
+    
     /**
      * @param args the command line arguments
      */
@@ -534,7 +551,6 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -567,5 +583,6 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JTextArea msgTA;
     private javax.swing.JButton sendBtn;
     private javax.swing.JLabel userPic;
+    private javax.swing.JLabel usrNameLbl;
     // End of variables declaration//GEN-END:variables
 }

@@ -45,17 +45,37 @@ public class ClientSocketHandler extends Thread{
                 System.out.println("el char aheh\t"+ch);
                 if(ch=='1'){
                     //user exists
+                    
+                     String[] parts = msg.split("\\$");
+                        
+                        String id   = parts[0];
+                        String loggedName= parts[1];
+                        String contactList= parts[2];
+                        
+                        String[] singleList = contactList.split("\\*");
+                        
+                        int y = singleList.length;
+                        for ( int i =0 ;  i < y ;  i ++){
+                            
+                            System.out.println(singleList[i]);
+                            
+                        }
+                      
+                        System.out.println(id);
+                        System.out.println(loggedName);
+                   //     System.out.println(s);
+                   
+                    
                     System.out.println("el kalam wsel");
-                    //JOptionPane.showMessageDialog(null, "username and password are correct");
                     JOptionPane.showMessageDialog(null, "email and password are coorect");
                     
-                    
-                    Login loginObj = new Login();
-                    loginObj.closeLoginWindow();
-                    
+           
                     MainPage mainPageObj = new MainPage();
                     mainPageObj.setVisible(true);
-                    loginObj.setVisible(false);
+                    mainPageObj.setUserNamelbl(loggedName);
+                    
+                    
+                    //loginObj.setVisible(false);
                     
                     //userNameLbl.setText("User Name");
                    // mainPageObj.setUserNamelbl("xxx");
@@ -65,6 +85,8 @@ public class ClientSocketHandler extends Thread{
                     //user Not found
                     System.out.println("mesh mawgood");
                     JOptionPane.showMessageDialog(null, "Not found");
+                    Login loginObj = new Login();
+                    loginObj.setVisible(true);
                     
                 }else if(msg.equals("f")){
                     System.out.println("Email Registered Before .. Please Enter Another one..");                    

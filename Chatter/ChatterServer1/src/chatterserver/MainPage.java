@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 package chatterserver;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import serverOperation.ServerOperation;
 import serverSocketHandler.ServerSocketHandler;
 /**
@@ -14,6 +19,10 @@ public class MainPage extends javax.swing.JFrame {
 
     ServerSocketHandler handler;
     serverOperation.ServerOperation operationObj;
+    DBConnections.DBConnection dbConn;
+    
+    
+    public String anouncmentMsgStr;
     
     /**
      * Creates new form MainPage
@@ -55,8 +64,8 @@ public class MainPage extends javax.swing.JFrame {
         offlineUsrCountLbl = new javax.swing.JLabel();
         onlineUsrCountLbl = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        sendBtn = new javax.swing.JButton();
+        anouncmentMsgTF = new javax.swing.JTextField();
+        sendAnouncmentBtn = new javax.swing.JButton();
         MenuBar = new javax.swing.JMenuBar();
         file = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -219,7 +228,12 @@ public class MainPage extends javax.swing.JFrame {
 
         MainTabbedPane.addTab("Online-Offline Users", jPanel5);
 
-        sendBtn.setText("Send");
+        sendAnouncmentBtn.setText("Send");
+        sendAnouncmentBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendAnouncmentBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -227,9 +241,9 @@ public class MainPage extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(85, 85, 85)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(anouncmentMsgTF, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(sendBtn)
+                .addComponent(sendAnouncmentBtn)
                 .addContainerGap(224, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -237,8 +251,8 @@ public class MainPage extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sendBtn))
+                    .addComponent(anouncmentMsgTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sendAnouncmentBtn))
                 .addContainerGap(183, Short.MAX_VALUE))
         );
 
@@ -275,8 +289,41 @@ public class MainPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MainTabbedPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MainTabbedPaneMouseClicked
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            dbConn = new DBConnections.DBConnection();
+            Statement stmt = dbConn.connection.createStatement();
+            String onlineQuery  = "SELECT COUNT(status) AS no.onOnlineUsr FROM users WHERE status = 1";
+            String offlineQuery  = "SELECT COUNT(status) AS no.offOnlineUsr FROM users WHERE status = 0";
+            
+            ResultSet rs = stmt.executeQuery(onlineQuery);
+            ResultSet rs2 = stmt.executeQuery(offlineQuery);
+            while(rs.next()){
+                onlineUsrCountLbl.setText(rs.getString(1));
+                offlineUsrCountLbl.setText(rs2.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+              
+        
     }//GEN-LAST:event_MainTabbedPaneMouseClicked
+
+    private void sendAnouncmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendAnouncmentBtnActionPerformed
+        try {
+            // TODO add your handling code here:
+            anouncmentMsgStr = anouncmentMsgTF.getText();
+            dbConn = new DBConnections.DBConnection();
+            Statement stmt = dbConn.connection.createStatement();     
+            String getOnlineUsersQuery = "select user_id from users where status= 1 ";
+            ResultSet rs = stmt.executeQuery(getOnlineUsersQuery);
+            while(rs.next()){
+               int  onlineUsersId = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_sendAnouncmentBtnActionPerformed
 
      private void jToggleButton2ItemStateChanged(java.awt.event.ItemEvent evt) {                                                
         int statue = evt.getStateChange();
@@ -335,6 +382,7 @@ public class MainPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane MainTabbedPane;
     private javax.swing.JMenuBar MenuBar;
+    private javax.swing.JTextField anouncmentMsgTF;
     private javax.swing.JLabel countOffLbl;
     private javax.swing.JLabel countOnLbl;
     private javax.swing.JMenu file;
@@ -356,10 +404,9 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JLabel offlineUsrCountLbl;
     private javax.swing.JLabel onlineUsrCountLbl;
-    private javax.swing.JButton sendBtn;
+    private javax.swing.JButton sendAnouncmentBtn;
     // End of variables declaration//GEN-END:variables
 }

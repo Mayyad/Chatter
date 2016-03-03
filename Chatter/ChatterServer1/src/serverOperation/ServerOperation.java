@@ -96,7 +96,7 @@ public class ServerOperation {
                 while (fl.next())
                 {
                     frndlst += fl.getString("name");
-                    frndlst += "\n";
+                    frndlst += "*";
                 }
             }
             

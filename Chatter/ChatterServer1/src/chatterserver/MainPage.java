@@ -252,6 +252,25 @@ public class MainPage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+     private void jToggleButton2ItemStateChanged(java.awt.event.ItemEvent evt) {                                                
+        int statue = evt.getStateChange();
+        if(statue==1){
+            //on
+           // handler = new ServerSocketHandler(12345);
+            //serverStatusLbl.setText("Server On");
+        }else{
+           // try {
+                //off
+                
+                //handler.ss.close();
+                
+         //   } catch (IOException ex) {
+                
+           // }
+               
+        }
+    }                
+
     /**
      * @param args the command line arguments
      */

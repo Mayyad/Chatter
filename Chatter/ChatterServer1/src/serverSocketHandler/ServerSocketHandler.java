@@ -25,41 +25,43 @@ import serverOperation.ServerOperation;
  * @author ahmedsobhy
  */
 public class ServerSocketHandler {
-    
+
     ServerSocket ss;
     DBConnections.DBConnection dbConn;
     //serverOperation.ServerOperation operation ;
     serverOperation.ServerOperation operation;
-    
+
     serverOperation.ServerOperation operationX;
-    
-    public ServerSocketHandler(int port){
+
+    public ServerSocketHandler(int port) {
         try {
-            ss=new ServerSocket(port);
-            
+            ss = new ServerSocket(port);
+
         } catch (IOException ex) {
         }
-        
-        while(true){
+
+        while (true) {
             try {
-                Socket s=ss.accept();
+                Socket s = ss.accept();
                 new ServerSocketStream(s);
-           }catch (IOException ex) {
-                
+            } catch (IOException ex) {
+
             }
         }
     }
-    
-    public class ServerSocketStream extends Thread{
-        DataInputStream dis ; 
-        PrintStream ps ; 
-        public ServerSocketStream(Socket s){
+
+    public class ServerSocketStream extends Thread {
+
+        DataInputStream dis;
+        PrintStream ps;
+
+        public ServerSocketStream(Socket s) {
             try {
                 dis = new DataInputStream(s.getInputStream());
-                ps  = new PrintStream(s.getOutputStream());
+                ps = new PrintStream(s.getOutputStream());
 
             } catch (IOException ex) {
-    
+
             }
 
             start();
@@ -67,114 +69,103 @@ public class ServerSocketHandler {
         }
 
         @Override
-        public void run(){
-            while(true){
+        public void run() {
+            while (true) {
                 try {
-                    
-                    String str=dis.readLine();
-                    char ch=str.charAt(0);
+
+                    String str = dis.readLine();
+                    char ch = str.charAt(0);
                     System.out.println(ch);
-                    
-                    if(ch=='1'){
-                        str=str.replaceFirst("1", "");
-                       
-                        //operation.register(str)
-                         operation=new ServerOperation();
-                         boolean isMailHere = operation.register(str);
-                        
-                         //boolean isMailHere;
-                         //isMailHere = operation.register(str);
-                         System.out.println(isMailHere);
-                         if(isMailHere){
+
+                    if (ch == '1') {
+                        str = str.replaceFirst("1", "");
+
+                        operation = new ServerOperation();
+                        boolean isMailHere = operation.register(str);
+
+                        //boolean isMailHere;
+                        //isMailHere = operation.register(str);
+                        System.out.println(isMailHere);
+                        if (isMailHere) {
                             //done registration
                             System.out.println("true1");
-                        }else{
+                        } else {
                             //email here .. please enter another email
                             ps.println("f");
-                        }  
-                    }
-                    else if(ch=='2'){
+                        }
+                    } else if (ch == '2') {
                         System.out.println("message");
-                        str=str.replaceFirst("2", "");
-                        
+                        str = str.replaceFirst("2", "");
+
                         //from-to id's and message
                         operation.sendMessage("1", "2", str);
-                        System.out.println(str); 
-                            
-                    }
-                    else if(ch=='3'){
-                        
+                        System.out.println(str);
+
+                    } else if (ch == '3') {
+
                         System.out.println("login");
-                        
+
                         String[] parts = str.split("\\$");
-                        
-                        String id   = parts[0];
-                        String email= parts[1];
+
+                        String id = parts[0];
+                        String email = parts[1];
                         String pass = parts[2];
                         System.out.println(id);
                         System.out.println(email);
                         System.out.println(pass);
-                        
-                        
+
+                   
                         dbConn = new DBConnections.DBConnection();
                         Statement stmt = dbConn.connection.createStatement();
-                        String query  = "select * from users where email= ? and password = ? ";
-      
-                        PreparedStatement  pstmt = dbConn.connection.prepareStatement(query);
+                        String query = "select * from users where email= ? and password = ? ";
+
+                        PreparedStatement pstmt = dbConn.connection.prepareStatement(query);
                         pstmt.setString(1, email);
                         pstmt.setString(2, pass);
-                        ResultSet rs=pstmt.executeQuery();
+                        ResultSet rs = pstmt.executeQuery();
                         //System.out.println(rs.getString(1)+"\t"+rs.getString(2));
-                        
-                        if(rs.next()){
+
+                        if (rs.next()) {
                             /*
                             String updateQuery = "update users set status=1 where email = ? ";
                             PreparedStatement pstmtUpdate=dbConn.connection.prepareStatement(updateQuery);
                             pstmtUpdate.setString(1, email);
                             stmt.executeUpdate(updateQuery);
-                            */
+                             */
                             System.out.println("user exists");
                             System.out.println(" \n congratulations !");
                             int myid = rs.getInt("user_id");
-                            
+
                             operationX = new ServerOperation();
                             String myName = operationX.returnName(myid);
                             String contactList = operationX.contactList(myid);
-                            
+
                             System.out.println(myid);
                             //System.out.println(contactList);
-                            ps.println("1"+"$"+myName+"$"+contactList);
-                           // handler.ps.println("3"+"$"+email+"$"+password);
-                        }else{
+                            ps.println("1" + "$" + myName + "$" + contactList);
+                            // handler.ps.println("3"+"$"+email+"$"+password);
+                        } else {
                             System.out.println("Not Found");
                             ps.println("0");
                         }
-                        
-                        
-                        
-                        
-                                              
+
                         //System.out.println(str);
-                    }
-                    else{
+                    } else {
                         System.out.println("nothing");
                     }
-                                      
-                    
+
                     //handle the operations here 
                     //login - register - send message - send files
-                    
-                    
                 } catch (IOException ex) {
-                        ex.printStackTrace();
+                    ex.printStackTrace();
                 } catch (SQLException ex) {
-                        ex.printStackTrace();
+                    ex.printStackTrace();
                 }
             }
         }
 
         @Override
-        public void destroy(){
+        public void destroy() {
             try {
                 dis.close();
                 ps.close();
@@ -184,5 +175,5 @@ public class ServerSocketHandler {
             }
         }
     }
-    
+
 }

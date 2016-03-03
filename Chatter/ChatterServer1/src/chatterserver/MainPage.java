@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package chatterserver;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import serverOperation.ServerOperation;
 import serverSocketHandler.ServerSocketHandler;
+
 /**
  *
  * @author ahmedsobhy
@@ -20,17 +22,17 @@ public class MainPage extends javax.swing.JFrame {
     ServerSocketHandler handler;
     serverOperation.ServerOperation operationObj;
     DBConnections.DBConnection dbConn;
-    
+
     
     public String anouncmentMsgStr;
-    
+
     /**
      * Creates new form MainPage
      */
     public MainPage() {
         initComponents();
-       // handler = new ServerSocketHandler(12345);
-       // operationObj= new ServerOperation();
+        // handler = new ServerSocketHandler(12345);
+        // operationObj= new ServerOperation();
     }
 
     /**
@@ -303,20 +305,20 @@ public class MainPage extends javax.swing.JFrame {
             // TODO add your handling code here:
             dbConn = new DBConnections.DBConnection();
             Statement stmt = dbConn.connection.createStatement();
-            String onlineQuery  = "SELECT COUNT(status) AS no.onOnlineUsr FROM users WHERE status = 1";
-            String offlineQuery  = "SELECT COUNT(status) AS no.offOnlineUsr FROM users WHERE status = 0";
-            
+            String onlineQuery = "SELECT COUNT(status) AS no.onOnlineUsr FROM users WHERE status = 1";
+            String offlineQuery = "SELECT COUNT(status) AS no.offOnlineUsr FROM users WHERE status = 0";
+
             ResultSet rs = stmt.executeQuery(onlineQuery);
             ResultSet rs2 = stmt.executeQuery(offlineQuery);
-            while(rs.next()){
+            while (rs.next()) {
                 onlineUsrCountLbl.setText(rs.getString(1));
                 offlineUsrCountLbl.setText(rs2.getString(1));
             }
         } catch (SQLException ex) {
             Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
         }
-              
-        
+
+
     }//GEN-LAST:event_MainTabbedPaneMouseClicked
 
     private void sendAnouncmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendAnouncmentBtnActionPerformed
@@ -324,11 +326,11 @@ public class MainPage extends javax.swing.JFrame {
             // TODO add your handling code here:
             anouncmentMsgStr = anouncmentMsgTF.getText();
             dbConn = new DBConnections.DBConnection();
-            Statement stmt = dbConn.connection.createStatement();     
+            Statement stmt = dbConn.connection.createStatement();
             String getOnlineUsersQuery = "select user_id from users where status= 1 ";
             ResultSet rs = stmt.executeQuery(getOnlineUsersQuery);
-            while(rs.next()){
-               int  onlineUsersId = rs.getInt(1);
+            while (rs.next()) {
+                int onlineUsersId = rs.getInt(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
@@ -341,24 +343,26 @@ public class MainPage extends javax.swing.JFrame {
 
     private void jToggleButton2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jToggleButton2ItemStateChanged
         int statue = evt.getStateChange();
-        
-        if(statue==1){
+
+        if (statue == 1) {
+
             handler = new ServerSocketHandler(12345);
+
             serverStatusLbl.setText("Server On");
-            System.out.print("on");
-        }else{
-           // try {
-               serverStatusLbl.setText("Server Off");
-                //handler.ss.close();
-                
-         //   } catch (IOException ex) {
-                
-           // }
-               
+
+        } else {
+            // try {
+            serverStatusLbl.setText("Server Off");
+            //handler.ss.close();
+
+            //   } catch (IOException ex) {
+            
+            // }
+            
         }
     }//GEN-LAST:event_jToggleButton2ItemStateChanged
-  
 
+    
     /**
      * @param args the command line arguments
      */

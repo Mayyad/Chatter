@@ -17,21 +17,19 @@ import socketHandler.ClientSocketHandler;
  */
 public class Login extends javax.swing.JFrame {
 
-    ClientSocketHandler handler ;
-    
+    ClientSocketHandler handler;
+
     public Login() {
         initComponents();
         handler = new ClientSocketHandler();
     }
 
-    
-    
-    public void closeLoginWindow(){
-                                                     //(window,int) this is the parameter
-        WindowEvent winClosingEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOS­ING);
+    public void closeLoginWindow() {
+        //(window,int) this is the parameter
+        WindowEvent winClosingEvent = new WindowEvent(this, WindowEvent.WINDOW_CLOS­ING);
         Toolkit.getDefaultToolkit().getSystemEve­ntQueue().postEvent(winClosingEvent);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -151,14 +149,14 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        
-        String email    = emailTF.getText();
+
+        String email = emailTF.getText();
         String password = passwordTF.getText();
-        
-        handler.ps.println("3"+"$"+email+"$"+password);
+
+        handler.ps.println("3" + "$" + email + "$" + password);
         this.dispose();// ($) the dollar sign is just a delimeter it doesnt mean anything 
         //handler.ps.println("1"+value);
-        
+
     }//GEN-LAST:event_loginBtnActionPerformed
 
     /**

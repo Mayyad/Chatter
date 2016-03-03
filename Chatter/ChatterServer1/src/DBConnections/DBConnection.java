@@ -14,8 +14,8 @@ public class DBConnection extends Thread{
     
     public Connection connection;
     String URL="jdbc:mysql://localhost:3306/Chatter";
-    String user="root";
-    String pass="";
+    String user="magdy";
+    String pass="iti";
 
     
     public DBConnection(){

@@ -6,6 +6,7 @@
 package chatterclient;
 
 import java.net.Socket;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JDialog;
@@ -25,17 +26,56 @@ import socketHandler.*;
 public class MainPage extends javax.swing.JFrame {
 
     ClientSocketHandler handler;
+    
+    DefaultListModel<String> friendListModel ;
+    DefaultListModel<String> groupListModel;
+    
+    
     /**
      * Creates new form MainPage
      */
     public MainPage() {
         initComponents();
         handler=new ClientSocketHandler();
-        //userNameLbl.setText(getUserNamelbl());
+        
         usrNameLbl.setText(getUserNamelbl());
         
+        friendListModel = new DefaultListModel<>();
+        friendList.setModel(friendListModel);
+        friendListModel.addElement(userName);
+        
+        groupListModel=new DefaultListModel<>();
+        groupList.setModel(groupListModel);
+        groupListModel.addElement(userName);
     }
 
+    /* set and get for the friend */
+   
+    public void setFriendListModel(String friendListX) {
+        //this.friendList1 = friendList1;
+        friendListModel.addElement(friendListX);
+    }
+
+    
+    public DefaultListModel<String> getFriendListModel() {
+        return friendListModel;
+    }
+
+    
+    /* set and get for the group */
+
+    public void setGroupListModel(String groupListX) {
+        //this.groupListModel = groupListModel;
+        groupListModel.addElement(groupListX);
+    }
+
+    public DefaultListModel<String> getGroupListModel() {
+        return groupListModel;
+    }
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -80,7 +120,7 @@ public class MainPage extends javax.swing.JFrame {
         friendList = new javax.swing.JList<>();
         jSeparator1 = new javax.swing.JSeparator();
         grplbl = new javax.swing.JLabel();
-        GroupList = new javax.swing.JList<>();
+        groupList = new javax.swing.JList<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -280,7 +320,7 @@ public class MainPage extends javax.swing.JFrame {
 
         grplbl.setText("Groups");
 
-        GroupList.setModel(new javax.swing.AbstractListModel<String>() {
+        groupList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
@@ -293,7 +333,7 @@ public class MainPage extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(GroupList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(groupList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGap(149, 149, 149)
                         .addComponent(jSeparator1))
@@ -317,7 +357,7 @@ public class MainPage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(grplbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(GroupList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(groupList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -488,6 +528,9 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     
+    
+    
+    
      public void setUserNamelbl(String name){
         //userName=name;
         
@@ -539,9 +582,9 @@ public class MainPage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Cntctlbl;
-    private javax.swing.JList<String> GroupList;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JList<String> friendList;
+    private javax.swing.JList<String> groupList;
     private javax.swing.JLabel grplbl;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;

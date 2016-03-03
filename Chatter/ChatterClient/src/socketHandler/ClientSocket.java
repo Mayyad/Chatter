@@ -15,18 +15,17 @@ import java.util.logging.Logger;
  * @author ahmedsobhy
  */
 public class ClientSocket {
-    
+
     Socket socket;
-    
-    public ClientSocket(String ip,int port){
-        
+
+    public ClientSocket(String ip, int port) {
+
         try {
-            socket=new Socket(ip,port);
+            socket = new Socket(ip, port);
         } catch (IOException ex) {
             Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
     }
-    
+
 }

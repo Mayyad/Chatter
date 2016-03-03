@@ -31,8 +31,8 @@ public class MainPage extends javax.swing.JFrame {
      */
     public MainPage() {
         initComponents();
-        // handler = new ServerSocketHandler(12345);
-        // operationObj= new ServerOperation();
+        handler = new ServerSocketHandler(12345);
+        operationObj= new ServerOperation();
     }
 
     /**
@@ -346,7 +346,7 @@ public class MainPage extends javax.swing.JFrame {
 
         if (statue == 1) {
 
-            handler = new ServerSocketHandler(12345);
+           // handler = new ServerSocketHandler(12345);
 
             serverStatusLbl.setText("Server On");
 

@@ -126,25 +126,27 @@ public class ServerSocketHandler {
                         //System.out.println(rs.getString(1)+"\t"+rs.getString(2));
 
                         if (rs.next()) {
-                            /*
+                             /*
                             String updateQuery = "update users set status=1 where email = ? ";
                             PreparedStatement pstmtUpdate=dbConn.connection.prepareStatement(updateQuery);
                             pstmtUpdate.setString(1, email);
                             stmt.executeUpdate(updateQuery);
-                             */
+                            */
                             System.out.println("user exists");
                             System.out.println(" \n congratulations !");
                             int myid = rs.getInt("user_id");
-
+                            
                             operationX = new ServerOperation();
                             String myName = operationX.returnName(myid);
                             String contactList = operationX.contactList(myid);
-
+                            String groupList = operationX.groupList(myid);
+                            
                             System.out.println(myid);
+                            System.out.println(groupList);
                             //System.out.println(contactList);
-                            ps.println("1" + "$" + myName + "$" + contactList);
-                            // handler.ps.println("3"+"$"+email+"$"+password);
-                        } else {
+                            ps.println("1"+"$"+myName+"$"+contactList+"$"+groupList);
+                           // handler.ps.println("3"+"$"+email+"$"+password);
+                        }else{
                             System.out.println("Not Found");
                             ps.println("0");
                         }

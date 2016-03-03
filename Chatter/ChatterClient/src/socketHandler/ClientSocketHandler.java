@@ -40,40 +40,55 @@ public class ClientSocketHandler extends Thread {
     public void run() {
         while (true) {
             try {
-                String msg = dis.readLine();
-                char ch = msg.charAt(0);
-                System.out.println("el char aheh\t" + ch);
-                if (ch == '1') {
-                    //user exists
-
-                    String[] parts = msg.split("\\$");
-
-                    String id = parts[0];
-                    String loggedName = parts[1];
-                    String contactList = parts[2];
-
-                    String[] singleList = contactList.split("\\*");
-
-                    int y = singleList.length;
-                    for (int i = 0; i < y; i++) {
-
-                        System.out.println(singleList[i]);
-
-                    }
-
-                    System.out.println(id);
-                    System.out.println(loggedName);
-                    //     System.out.println(s);
-
+                String msg=dis.readLine();
+                char ch=msg.charAt(0);
+                System.out.println("el char aheh\t"+ch);
+                if(ch=='1'){
+                     //user exists
+                    
+                    MainPage mainPageObj = new MainPage();
+                    
+                     
+                     String[] parts = msg.split("\\$");
+                        
+                        String id         = parts[0];
+                        String loggedName = parts[1];
+                        String contactList= parts[2];
+                        String groupList  = parts[3];
+                        
+                        String[] singleContactList = contactList.split("\\*");
+                        String[] singleGroupList= groupList.split("\\*");
+                        
+                        
+                        int y = singleContactList.length;
+                        int z = singleGroupList.length;
+                        
+                        for ( int i =0 ;  i < y ;  i ++){
+                            
+                            System.out.println(singleContactList[i]);
+                            mainPageObj.setFriendListModel(singleContactList[i]);
+                            
+                        }
+                        
+                        for(int i=0;i<z;i++){
+                            System.out.println(singleGroupList[i]);
+                            mainPageObj.setGroupListModel(singleGroupList[i]);
+                        }
+                      
+                        System.out.println(id);
+                        System.out.println(loggedName);
+                   //     System.out.println(s);
+                   
                     
                     System.out.println("el kalam wsel");
                     JOptionPane.showMessageDialog(null, "email and password are coorect");
 
+
                     
-                    MainPage mainPageObj = new MainPage();
                     mainPageObj.setVisible(true);
                     mainPageObj.setUserNamelbl(loggedName);
-
+     
+                    
                     
                     //loginObj.setVisible(false);
                     //userNameLbl.setText("User Name");

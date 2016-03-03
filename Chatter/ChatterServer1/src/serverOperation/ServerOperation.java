@@ -42,8 +42,9 @@ public class ServerOperation {
             //check email validation then insert into database
             System.out.println("done");                                
             stm = dbConnection.connection.createStatement();                        
-                                            
-            String query = "INSERT INTO users( name, password, email,gender,age) VALUES("+str+")";
+            
+            String str1=str+",1";
+            String query = "INSERT INTO users( name, password, email,gender,age,status) VALUES("+str1+")";
          
             stm.execute(query);           
             

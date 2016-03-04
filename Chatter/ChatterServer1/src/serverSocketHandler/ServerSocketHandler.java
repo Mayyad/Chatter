@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,18 +33,21 @@ public class ServerSocketHandler extends Thread{
     serverOperation.ServerOperation operation;
 
     serverOperation.ServerOperation operationX;
-
+    ArrayList<String> emails;
+    static ArrayList<ServerSocketStream> clients=new ArrayList<ServerSocketStream>();
+    
     public ServerSocketHandler(int port) {
         try {
             ss = new ServerSocket(port);
             start();
+            emails = new ArrayList<String>();  
         } catch (IOException ex) {
         }
              
     }
     public void run(){
          while (true) {
-            try {
+            try {                
                 Socket s = ss.accept();
                 new ServerSocketStream(s);
             } catch (IOException ex) {
@@ -65,7 +69,7 @@ public class ServerSocketHandler extends Thread{
             } catch (IOException ex) {
 
             }
-
+            clients.add(this);
             start();
 
         }
@@ -99,9 +103,27 @@ public class ServerSocketHandler extends Thread{
                     } else if (ch == '2') {
                         System.out.println("message");
                         str = str.replaceFirst("2", "");
-
-                        //from-to id's and message
-                        operation.sendMessage("1", "2", str);
+                        String[] parts = str.split("\\$");
+                        String msg=parts[0];
+                        String from=parts[1];
+                        String to=parts[2];
+                        System.out.println(to);
+                        
+                        int i;
+                        for(i=0;i<emails.size();i++){
+                            System.out.println(emails.get(i));
+                            if(to.equals(emails.get(i))){
+                                System.out.println("equalZzzZ");
+                                clients.get(i+1).ps.println(str);
+                            }
+                        }
+                        //get(i).ps.println();
+//                        for(ServerSocketStream ss:clients){
+//                            ss.ps.println(msg);
+//                        }
+                        
+                        //from-to id's and message to save it at database....
+                        operation.sendMessage(from,to,msg);
                         System.out.println(str);
 
                     } else if (ch == '3') {
@@ -138,13 +160,15 @@ public class ServerSocketHandler extends Thread{
                             System.out.println("user exists");
                             System.out.println(" \n congratulations !");
                             int myid = rs.getInt("user_id");
+                            emails.add(email);
                             
                             operationX = new ServerOperation();
                             String myName = operationX.returnName(myid);
                             String contactList = operationX.contactList(myid);
-                            
+                            String friendsEmail = operationX.friendsEmail(myid);
                             if (contactList == null ){
                                 contactList = " ";
+                                friendsEmail = "";
                             }
                             String groupList = operationX.groupList(myid);
                             if ( groupList == null )
@@ -156,7 +180,7 @@ public class ServerSocketHandler extends Thread{
                             System.out.println(myid);
                             System.out.println(groupList);
                             System.out.println(contactList);
-                            ps.println("1"+"$"+myName+"$"+contactList+"$"+groupList+"$"+" ");
+                            ps.println("1"+"$"+myName+"$"+contactList+"$"+groupList+"$"+friendsEmail);
                             
                            // handler.ps.println("3"+"$"+email+"$"+password);
                         }else{
@@ -172,9 +196,9 @@ public class ServerSocketHandler extends Thread{
                     //handle the operations here 
                     //login - register - send message - send files
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    
                 }
             }
         }

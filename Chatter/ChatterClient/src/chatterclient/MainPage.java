@@ -4,13 +4,15 @@
  * and open the template in the editor.
  */
 package chatterclient;
-
+import JavaBeans.User;
+import TabPaneHandler.CustomTabePane;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.Socket;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
@@ -34,7 +36,10 @@ public class MainPage extends javax.swing.JFrame {
     
     DefaultListModel<String> friendListModel ;
     DefaultListModel<String> groupListModel;
-    
+    public ArrayList<String> emails;
+    User user;
+    int index;
+    CustomTabePane tabFriendList,tabGroupList;
     
     /**
      * Creates new form MainPage
@@ -42,7 +47,7 @@ public class MainPage extends javax.swing.JFrame {
     public MainPage() {
         initComponents();
         handler=new ClientSocketHandler();
-        
+        emails =new ArrayList<String>();
         usrNameLbl.setText(getUserNamelbl());
         
         friendListModel = new DefaultListModel<>();
@@ -52,6 +57,7 @@ public class MainPage extends javax.swing.JFrame {
         groupListModel=new DefaultListModel<>();
         groupList.setModel(groupListModel);
         groupListModel.addElement(userName);
+        user=User.getInstance();
     }
 
     /* set and get for the friend */
@@ -66,7 +72,7 @@ public class MainPage extends javax.swing.JFrame {
         return friendListModel;
     }
 
-    
+   
     /* set and get for the group */
 
     public void setGroupListModel(String groupListX) {
@@ -97,7 +103,7 @@ public class MainPage extends javax.swing.JFrame {
         mainTabPane = new javax.swing.JTabbedPane();
         chatPanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        chatMsgs = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
         msgTA = new javax.swing.JTextArea();
         sendMsgBtn = new javax.swing.JButton();
@@ -134,9 +140,10 @@ public class MainPage extends javax.swing.JFrame {
 
         usrNameLbl.setText("User Name");
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jScrollPane4.setViewportView(jTextArea3);
+        chatMsgs.setEditable(false);
+        chatMsgs.setColumns(20);
+        chatMsgs.setRows(5);
+        jScrollPane4.setViewportView(chatMsgs);
 
         msgTA.setColumns(20);
         msgTA.setRows(5);
@@ -413,14 +420,22 @@ public class MainPage extends javax.swing.JFrame {
 
     private void sendMsgBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendMsgBtnActionPerformed
 
+      //send if the index belong to friend list only....
       String msg =  msgTA.getText();
-      try{ 
-        handler.ps.println("2"+msg);
-      }catch(Exception e){
-          System.out.println("error");
-      }
-      System.out.println("done click");
       
+      String from = user.getEmail();
+      String to = emails.get(tabFriendList.index-1);
+      
+      chatMsgs.setText(chatMsgs.getText()+"\nuser name :"+" Msg");
+      
+      try{           
+        handler.ps.println("2"+msg+"$"+from+"$"+to);
+      }catch(Exception e){
+          System.out.println("error...");
+      }
+      System.out.println(emails.get(tabFriendList.index-1));
+      System.out.println(tabFriendList.index);
+         
     }//GEN-LAST:event_sendMsgBtnActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -438,82 +453,16 @@ public class MainPage extends javax.swing.JFrame {
     
     
     private void friendListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendListMouseClicked
-        mainTabPane.addTab(friendList.getSelectedValue(), chatPanel);
-        
-        int index=mainTabPane.indexOfTab(friendList.getSelectedValue());
-        JPanel pnlTab = new JPanel(new GridBagLayout());
-        pnlTab.setOpaque(false);
-        JLabel lblTitle=new JLabel(friendList.getSelectedValue());
-        JButton XBtn = new JButton("X");
-        
-        GridBagConstraints grid = new GridBagConstraints();
-        grid.gridx = 0;
-        grid.gridy = 0;
-        grid.weightx = 1;
-        
-        
-        pnlTab.add(lblTitle,grid);
-        
-        grid.gridx++;
-        
-        grid.weightx = 0;
-        pnlTab.add(XBtn,grid);
-        
-        mainTabPane.setTabComponentAt(index, pnlTab);
-        
-        XBtn.addActionListener(new MyCloseActionHandler(friendList.getSelectedValue()));
-            
+       tabFriendList=new CustomTabePane(mainTabPane,friendList,index,chatPanel);
+       tabFriendList.addTab();
     }//GEN-LAST:event_friendListMouseClicked
 
     private void groupListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_groupListMouseClicked
-        mainTabPane.addTab(groupList.getSelectedValue(), chatPanel);
-        
-        int index=mainTabPane.indexOfTab(groupList.getSelectedValue());
-        JPanel pnlTab = new JPanel(new GridBagLayout());
-        pnlTab.setOpaque(false);
-        JLabel lblTitle=new JLabel(groupList.getSelectedValue());
-        JButton XBtn = new JButton("X");
-        
-        GridBagConstraints grid = new GridBagConstraints();
-        grid.gridx = 0;
-        grid.gridy = 0;
-        grid.weightx = 1;
-        
-        
-        pnlTab.add(lblTitle,grid);
-        
-        grid.gridx++;
-        
-        grid.weightx = 0;
-        pnlTab.add(XBtn,grid);
-        
-        mainTabPane.setTabComponentAt(index, pnlTab);
-        
-        XBtn.addActionListener(new MyCloseActionHandler(groupList.getSelectedValue()));
+       tabGroupList=new CustomTabePane(mainTabPane,groupList,index,chatPanel);
+       tabGroupList.addTab();
     }//GEN-LAST:event_groupListMouseClicked
  
-   public class MyCloseActionHandler implements ActionListener {
-    private String tabName;
-    
-    public MyCloseActionHandler(String tabName) {
-        this.tabName = tabName;
-    }
 
-    public String getTabName() {
-        return tabName;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-
-        int index = mainTabPane.indexOfTab(getTabName());
-        if (index >= 0) {
-
-            mainTabPane.removeTabAt(index);
-        }
-    }
-}   
-    
     public void setUserNamelbl(String name){
         //userName=name;
         
@@ -566,6 +515,7 @@ public class MainPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Cntctlbl;
     private javax.swing.JPanel MainPanel;
+    private javax.swing.JTextArea chatMsgs;
     private javax.swing.JPanel chatPanel;
     private javax.swing.JList<String> friendList;
     private javax.swing.JList<String> groupList;
@@ -590,7 +540,6 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTabbedPane mainTabPane;
     private javax.swing.JTextArea msgTA;
     private javax.swing.JButton sendFileBtn;

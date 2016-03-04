@@ -58,7 +58,7 @@ public class ServerOperation {
     }
     //send message from to 
     public void sendMessage(String from,String to,String msg){
-        try {
+        try{     
             //insert into database
             String query="INSERT INTO messages(from_id,to_id,msg_txt) VALUES("+"'"+from+"'"+","+"'"+to+"'"+","+"'"+msg+"'"+")   ";
             stm.execute(query);
@@ -108,6 +108,38 @@ public class ServerOperation {
          return frndlst ;
     }
     
+    
+     public String friendsEmail(int id){
+        
+       dbConnection = new DBConnections.DBConnection();
+       
+        String myFrineds = null;
+        String frndlst = null;
+        try {
+            stm = dbConnection.connection.createStatement();
+            String query = new String("SELECT * FROM friends WHERE user_id = '"+id+"' ");
+            ResultSet rs = stm.executeQuery(query);
+            
+            while (rs.next())
+            {
+                myFrineds = rs.getString("friend_id");
+                stm = dbConnection.connection.createStatement();
+                String queryString = new String("SELECT * FROM users WHERE user_id = '"+myFrineds+"' ");
+                ResultSet fl = stm.executeQuery(queryString);
+                
+                while (fl.next())
+                {
+                    frndlst += fl.getString("email");
+                    frndlst += "*";
+                }
+            }
+            
+        } catch (SQLException ex) {
+            return "Error";
+        }
+        
+         return frndlst ;
+    }
     
     
     public String groupList (int id ){

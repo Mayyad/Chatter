@@ -5,6 +5,8 @@
  */
 package socketHandler;
 
+import JavaBeans.User;
+import TabPaneHandler.CustomTabePane;
 import chatterclient.*;
 
 
@@ -23,7 +25,8 @@ public class ClientSocketHandler extends Thread {
     public Socket socket;
     public DataInputStream dis; //bystlm
     public PrintStream ps;   //byb3t
-
+    //CustomTabePane tab;
+    //MainPage mainPg;
     public ClientSocketHandler() {
 
         try {
@@ -41,6 +44,7 @@ public class ClientSocketHandler extends Thread {
         while (true) {
             try {
                 String msg=dis.readLine();
+                System.out.println(msg);
                 char ch=msg.charAt(0);
                 System.out.println("el char aheh\t"+ch);
                 if(ch=='1'){
@@ -55,11 +59,13 @@ public class ClientSocketHandler extends Thread {
                         String loggedName = parts[1];
                         String contactList= parts[2];
                         String groupList  = parts[3];
+                        String friendsEmail  = parts[4];
                         
                         if (contactList.equals(" "))
                         {
                             contactList = " ";
-                             mainPageObj.setFriendListModel("");
+                            mainPageObj.setFriendListModel("");
+                            friendsEmail = " ";
                         }
                         else {
                             String[] singleContactList = contactList.split("\\*");
@@ -69,7 +75,12 @@ public class ClientSocketHandler extends Thread {
                                 System.out.println(singleContactList[i]);
                                 mainPageObj.setFriendListModel(singleContactList[i]);
                             }
-                             
+             
+                             String[] singleEmailContactList = friendsEmail.split("\\*");
+                             int z = singleEmailContactList.length;
+                             for ( int i =0 ;  i < z ;  i ++){
+                                mainPageObj.emails.add(singleEmailContactList[i]);
+                            }
                         }
                         
                         
@@ -120,11 +131,19 @@ public class ClientSocketHandler extends Thread {
                     System.out.println("Email Registered Before .. Please Enter Another one..");
                     JOptionPane.showMessageDialog(new Registration(), "Email here please enter another email !!");
                 } else {
-                    System.out.println("nothing");
+                    //new message recieved 
+                    System.out.println(msg);
+                    
+                                      
                 }
-                System.out.println(msg);
             } catch (IOException ex) {
-                System.out.println("error");
+                System.out.println("error hereee");
+                MainPage mainPg=new MainPage();
+                JOptionPane.showMessageDialog(mainPg,
+					"Server down....",
+					"Server  error",
+					JOptionPane.ERROR_MESSAGE);
+					System.exit(1);
             }
         }
     }

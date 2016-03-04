@@ -1,5 +1,6 @@
 package chatterclient;
 
+import JavaBeans.User;
 import java.awt.event.WindowEvent;
 import java.awt.*;
 
@@ -18,7 +19,8 @@ import socketHandler.ClientSocketHandler;
 public class Login extends javax.swing.JFrame {
 
     ClientSocketHandler handler;
-
+    User u1;
+    
     public Login() {
         initComponents();
         handler = new ClientSocketHandler();
@@ -144,7 +146,9 @@ public class Login extends javax.swing.JFrame {
 
         String email = emailTF.getText();
         String password = passwordTF.getText();
-
+        
+        u1=User.getInstance();
+        u1.setEmail(email);
         handler.ps.println("3" + "$" + email + "$" + password);
         this.dispose();// ($) the dollar sign is just a delimeter it doesnt mean anything 
         //handler.ps.println("1"+value);

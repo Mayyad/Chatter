@@ -469,7 +469,7 @@ public class MainPage extends javax.swing.JFrame {
         this.usrNameLbl.setText(name);
     }
     
-     String userName;
+    String userName;
     String getUserNamelbl(){
         return userName;
     }

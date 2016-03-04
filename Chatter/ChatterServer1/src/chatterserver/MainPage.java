@@ -348,7 +348,7 @@ public class MainPage extends javax.swing.JFrame {
             
             serverStatusLbl.setText("Server On");
             handler = new ServerSocketHandler(12345);
-            operationObj = new ServerOperation();
+
         } else {
             // try {
             serverStatusLbl.setText("Server Off");

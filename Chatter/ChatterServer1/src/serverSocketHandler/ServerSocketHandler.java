@@ -59,7 +59,7 @@ public class ServerSocketHandler {
             try {
                 dis = new DataInputStream(s.getInputStream());
                 ps = new PrintStream(s.getOutputStream());
-
+                
             } catch (IOException ex) {
 
             }
@@ -72,15 +72,16 @@ public class ServerSocketHandler {
         public void run() {
             while (true) {
                 try {
-
+                    
                     String str = dis.readLine();
                     char ch = str.charAt(0);
                     System.out.println(ch);
-
+                    
+                    operation = new ServerOperation();
                     if (ch == '1') {
                         str = str.replaceFirst("1", "");
 
-                        operation = new ServerOperation();
+                    
                         boolean isMailHere = operation.register(str);
 
                         //boolean isMailHere;

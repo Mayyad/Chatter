@@ -343,13 +343,14 @@ public class MainPage extends javax.swing.JFrame {
 
     private void jToggleButton2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jToggleButton2ItemStateChanged
         int statue = evt.getStateChange();
-
-        if (statue == 1) {
-            
+           
+        if (statue == 1) {            
+     
             serverStatusLbl.setText("Server On");
             handler = new ServerSocketHandler(12345);
-
-        } else {
+           
+        }
+        else {
             // try {
             serverStatusLbl.setText("Server Off");
             try {

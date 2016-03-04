@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import serverOperation.ServerOperation;
 import serverSocketHandler.ServerSocketHandler;
 
@@ -23,18 +24,60 @@ public class MainPage extends javax.swing.JFrame {
     ServerSocketHandler handler;
     serverOperation.ServerOperation operationObj;
     DBConnections.DBConnection dbConn;
+    
+    DefaultListModel<String> onlineListModel ;
+    DefaultListModel<String> offlineListModel;
+    
 
     
     public String anouncmentMsgStr;
 
+    String modelItemString;
     /**
      * Creates new form MainPage
      */
     public MainPage() {
         initComponents();
 
+        onlineListModel = new DefaultListModel<>();
+        onlineList.setModel(onlineListModel);
+        onlineListModel.addElement(modelItemString);
+        
+        offlineListModel=new DefaultListModel<>();
+        offlineList.setModel(offlineListModel);
+        offlineListModel.addElement(modelItemString);
+
     }
 
+    /* offline set and get  */
+    
+    public void setOnlineListModel(String onlineListX) {
+     //   this.onlineListModel = onlineListModel;
+    
+     onlineListModel.addElement(onlineListX);
+    //onlineListModel.set(onlineListX);
+    }
+
+    public DefaultListModel<String> getOnlineListModel() {
+        return onlineListModel;
+    }
+
+    /* offline set and get */
+    
+    public void setOfflineListModel(String offlineListX) {
+        //this.offlineListModel = offlineListModel;
+        offlineListModel.addElement(offlineListX);
+    }
+
+    
+    public DefaultListModel<String> getOfflineListModel() {
+        return offlineListModel;
+    }
+
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,21 +93,25 @@ public class MainPage extends javax.swing.JFrame {
         jToggleButton2 = new javax.swing.JToggleButton();
         serverStatusLbl = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        getall = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jLabel5 = new javax.swing.JLabel();
+        maleLbl = new javax.swing.JLabel();
+        femaleLbl = new javax.swing.JLabel();
+        onLbl = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
         countOnLbl = new javax.swing.JLabel();
         countOffLbl = new javax.swing.JLabel();
         offlineUsrCountLbl = new javax.swing.JLabel();
         onlineUsrCountLbl = new javax.swing.JLabel();
+        getstatus = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        onlineList = new javax.swing.JList<>();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        offlineList = new javax.swing.JList<>();
         jPanel1 = new javax.swing.JPanel();
         anouncmentMsgTF = new javax.swing.JTextField();
         sendAnouncmentBtn = new javax.swing.JButton();
@@ -128,45 +175,77 @@ public class MainPage extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
+                .addContainerGap(106, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(78, 78, 78))
         );
 
         MainTabbedPane.addTab("Server Control", jPanel2);
 
-        jLabel4.setText("jLabel4");
+        getall.setText("Refreash");
+        getall.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                getallActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("jButton1");
+        jLabel3.setForeground(new java.awt.Color(56, 91, 176));
+        jLabel3.setText("Current Online users : ");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jLabel4.setForeground(new java.awt.Color(240, 38, 32));
+        jLabel4.setText("Male :");
+
+        jLabel5.setForeground(new java.awt.Color(41, 172, 46));
+        jLabel5.setText("Female : ");
+
+        maleLbl.setText("   ....");
+
+        femaleLbl.setText(".....");
+
+        onLbl.setText("......");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(133, 133, 133)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(79, 79, 79)
-                        .addComponent(jButton1)))
-                .addContainerGap(221, Short.MAX_VALUE))
+                        .addGap(48, 48, 48)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(50, 50, 50)
+                                .addComponent(onLbl))
+                            .addComponent(jLabel5)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(195, 195, 195)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(getall)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(femaleLbl)
+                                .addComponent(maleLbl)))))
+                .addContainerGap(255, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addGap(65, 65, 65)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(onLbl))
+                .addGap(41, 41, 41)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jButton1))
-                .addGap(24, 24, 24)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(maleLbl))
+                .addGap(32, 32, 32)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(femaleLbl))
+                .addGap(35, 35, 35)
+                .addComponent(getall)
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         MainTabbedPane.addTab("Statistics", jPanel4);
@@ -175,67 +254,89 @@ public class MainPage extends javax.swing.JFrame {
 
         jLabel2.setText("Offline Users");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
-
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jScrollPane3.setViewportView(jTextArea3);
-
         countOnLbl.setText("count");
 
         countOffLbl.setText("count");
 
-        offlineUsrCountLbl.setText("jLabel5");
+        offlineUsrCountLbl.setText("y");
 
-        onlineUsrCountLbl.setText("jLabel6");
+        onlineUsrCountLbl.setText("x");
+
+        getstatus.setText("Refreash");
+        getstatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                getstatusActionPerformed(evt);
+            }
+        });
+
+        onlineList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane4.setViewportView(onlineList);
+
+        offlineList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane5.setViewportView(offlineList);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(43, 43, 43)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(getstatus))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(onlineUsrCountLbl)
+                            .addComponent(countOnLbl))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(countOnLbl)
-                    .addComponent(onlineUsrCountLbl))
-                .addGap(50, 50, 50)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel2)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(countOffLbl)
-                    .addComponent(offlineUsrCountLbl))
-                .addContainerGap(126, Short.MAX_VALUE))
+                    .addComponent(offlineUsrCountLbl)
+                    .addComponent(countOffLbl))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(countOnLbl)
-                    .addComponent(countOffLbl))
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2)))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(offlineUsrCountLbl))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(countOffLbl))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(onlineUsrCountLbl)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(offlineUsrCountLbl)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(countOnLbl))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(onlineUsrCountLbl)
+                                .addGap(94, 94, 94)
+                                .addComponent(getstatus))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(24, 57, Short.MAX_VALUE))
         );
 
         MainTabbedPane.addTab("Online-Offline Users", jPanel5);
@@ -265,7 +366,7 @@ public class MainPage extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(anouncmentMsgTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(sendAnouncmentBtn))
-                .addContainerGap(183, Short.MAX_VALUE))
+                .addContainerGap(260, Short.MAX_VALUE))
         );
 
         MainTabbedPane.addTab("Send Announcment", jPanel1);
@@ -301,22 +402,7 @@ public class MainPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MainTabbedPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MainTabbedPaneMouseClicked
-        try {
-            // TODO add your handling code here:
-            dbConn = new DBConnections.DBConnection();
-            Statement stmt = dbConn.connection.createStatement();
-            String onlineQuery = "SELECT COUNT(status) AS no.onOnlineUsr FROM users WHERE status = 1";
-            String offlineQuery = "SELECT COUNT(status) AS no.offOnlineUsr FROM users WHERE status = 0";
-
-            ResultSet rs = stmt.executeQuery(onlineQuery);
-            ResultSet rs2 = stmt.executeQuery(offlineQuery);
-            while (rs.next()) {
-                onlineUsrCountLbl.setText(rs.getString(1));
-                offlineUsrCountLbl.setText(rs2.getString(1));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
 
 
     }//GEN-LAST:event_MainTabbedPaneMouseClicked
@@ -351,7 +437,7 @@ public class MainPage extends javax.swing.JFrame {
            
         }
         else {
-            // try {
+            // try {/ 
             serverStatusLbl.setText("Server Off");
             try {
                 handler.ss.close();
@@ -364,6 +450,85 @@ public class MainPage extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jToggleButton2ItemStateChanged
+
+    private void getstatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getstatusActionPerformed
+        // TODO add your handling code here:
+//         
+       
+       String onLineString  = new ServerOperation().getOnlineUsers();
+       String offLineString = new ServerOperation().getOfflineUsers();
+       
+      
+       onlineListModel.removeAllElements();
+       offlineListModel.removeAllElements();
+       
+       
+      
+       String[] onlineArray = onLineString.split("\\*");
+       String[] offlineArray= offLineString.split("\\*");
+               
+       int onlineLength = onlineArray.length;
+       int offlineLength= offlineArray.length;
+       
+       
+       for(int i=0 ; i<onlineLength ; i++){
+           System.out.println(onlineArray[i]);
+           setOnlineListModel(onlineArray[i]);
+        } 
+
+       for(int y=0 ; y<offlineLength ; y++){
+           System.out.println(offlineArray[y]);
+           setOfflineListModel(offlineArray[y]);
+        } 
+       
+       StringBuilder on = new StringBuilder();
+       on.append(onlineLength);
+       String onn = on.toString();
+       StringBuilder off = new StringBuilder();
+       off.append(offlineLength);
+       String offf = off.toString();
+       
+       onlineUsrCountLbl.setText(onn);
+       offlineUsrCountLbl.setText(offf);
+       
+       //System.out.println(onlineLength);
+       
+       
+
+    
+    }//GEN-LAST:event_getstatusActionPerformed
+
+    private void getallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getallActionPerformed
+        // TODO add your handling code here:
+        
+         int male  = new ServerOperation().genderMaleStat();
+         int female = new ServerOperation().genderFemaleStat();
+         int online = new ServerOperation().getOnline();
+         
+          StringBuilder maleInteger = new StringBuilder();
+          maleInteger.append(male);
+          String malee = maleInteger.toString();
+         
+          
+          StringBuilder femaleInteger = new StringBuilder();
+          femaleInteger.append(female);
+          String femalee = femaleInteger.toString();
+          
+          
+           StringBuilder onlineInteger = new StringBuilder();
+          onlineInteger.append(online);
+          String onlinee = onlineInteger.toString();
+          
+          
+          maleLbl.setText(malee);
+          femaleLbl.setText(femalee);
+          
+          onLbl.setText(onlinee);
+         
+          
+         
+        
+    }//GEN-LAST:event_getallActionPerformed
 
     /**
      * @param args the command line arguments
@@ -406,26 +571,30 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JTextField anouncmentMsgTF;
     private javax.swing.JLabel countOffLbl;
     private javax.swing.JLabel countOnLbl;
+    private javax.swing.JLabel femaleLbl;
     private javax.swing.JMenu file;
+    private javax.swing.JButton getall;
+    private javax.swing.JButton getstatus;
     private javax.swing.JMenu info;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JLabel maleLbl;
+    private javax.swing.JList<String> offlineList;
     private javax.swing.JLabel offlineUsrCountLbl;
+    private javax.swing.JLabel onLbl;
+    private javax.swing.JList<String> onlineList;
     private javax.swing.JLabel onlineUsrCountLbl;
     private javax.swing.JButton sendAnouncmentBtn;
     private javax.swing.JLabel serverStatusLbl;

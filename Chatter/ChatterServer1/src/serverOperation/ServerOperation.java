@@ -208,4 +208,212 @@ public class ServerOperation {
         return name ;
     }
     
+    public void setOnline (int id)
+    {
+        try {
+            dbConnection = new DBConnections.DBConnection();
+            
+            stm = dbConnection.connection.createStatement();
+            
+            String query = new String ("UPDATE users SET status = '1' WHERE user_id = '"+id+"' ");
+            
+            stm.execute(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+    }
+    
+    
+    public void setBusy (int id)
+    {
+        try {
+            dbConnection = new DBConnections.DBConnection();
+            
+            stm = dbConnection.connection.createStatement();
+            
+            String query = new String ("UPDATE users SET status = '3' WHERE user_id = '"+id+"' ");
+            
+            stm.execute(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+    }
+    
+    
+    public void setOffline (int id)
+    {
+        try {
+            dbConnection = new DBConnections.DBConnection();
+            
+            stm = dbConnection.connection.createStatement();
+            
+            String query = new String ("UPDATE users SET status = '0' WHERE user_id = '"+id+"' ");
+            
+            stm.execute(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+    }
+    
+    
+    public void setAway (int id)
+    {
+        try {
+            dbConnection = new DBConnections.DBConnection();
+            
+            stm = dbConnection.connection.createStatement();
+            
+            String query = new String ("UPDATE users SET status = '2' WHERE user_id = '"+id+"' ");
+            
+            stm.execute(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+    }
+    
+    
+    public String getOnlineUsers ()
+    {
+        String onlinelist = "";
+        try {
+            dbConnection = new DBConnections.DBConnection();
+            stm = dbConnection.connection.createStatement();
+            String query = new String ("SELECT * FROM users WHERE status = '1' ");
+            
+            ResultSet ol =  stm.executeQuery(query);
+            
+            while (ol.next())
+            {
+                try {
+                    onlinelist += ol.getString("name");
+                    onlinelist += "*";
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return onlinelist;
+    }
+    
+    
+    
+    public String getOfflineUsers ()
+    
+   
+    {
+        String offlinelist = "";
+        try {
+            dbConnection = new DBConnections.DBConnection();
+            stm = dbConnection.connection.createStatement();
+            String query = new String ("SELECT * FROM users WHERE status = '0' ");
+            
+            ResultSet ol =  stm.executeQuery(query);
+            
+            while (ol.next())
+            {
+                try {
+    
+   
+                    offlinelist += ol.getString("name");
+                    offlinelist += "*";
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return offlinelist;
+    }
+    
+    public int genderMaleStat ()
+    {
+        int x = 0;
+        try {
+           
+            dbConnection = new DBConnections.DBConnection();
+            stm = dbConnection.connection.createStatement();
+            String query = new String ("SELECT COUNT(gender) FROM users WHERE gender = 'male' ");
+            ResultSet all = stm.executeQuery(query);
+            
+            while (all.next())
+            {
+                try {
+                    x = all.getInt(1);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return x ;
+    }
+    
+    public int genderFemaleStat ()
+    {
+        int x = 0;
+        try {
+           
+            dbConnection = new DBConnections.DBConnection();
+            stm = dbConnection.connection.createStatement();
+            String query = new String ("SELECT COUNT(gender) FROM users WHERE gender = 'female' ");
+            ResultSet all = stm.executeQuery(query);
+            
+            while (all.next())
+            {
+                try {
+                    x = all.getInt(1);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return x ;
+    }
+    
+    
+    
+    
+    
+    public int getOnline ()
+    {
+        int x = 0;
+        try {
+            
+            dbConnection = new DBConnections.DBConnection();
+            stm = dbConnection.connection.createStatement();
+            String query = new String ("SELECT COUNT(status) FROM users WHERE status = '1' ");
+            ResultSet onlines = stm.executeQuery(query);
+            while (onlines.next())
+            {
+                try {
+                    x = onlines.getInt(1);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return x;
+    }
+    
+    
+    
 }

@@ -435,7 +435,7 @@ public class MainPage extends javax.swing.JFrame {
     private void friendListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendListMouseClicked
         mainTabPane.addTab(friendList.getSelectedValue(), chatPanel);
         
-        int index=mainTabPane.indexOfTab(this.getTitle());
+        int index=mainTabPane.indexOfTab(friendList.getSelectedValue());
         JPanel pnlTab = new JPanel(new GridBagLayout());
         pnlTab.setOpaque(false);
         JLabel lblTitle=new JLabel(friendList.getSelectedValue());
@@ -444,7 +444,7 @@ public class MainPage extends javax.swing.JFrame {
         GridBagConstraints grid = new GridBagConstraints();
         grid.gridx = 0;
         grid.gridy = 0;
-        grid.weightx = 2;
+        grid.weightx = 1;
         
         
         pnlTab.add(lblTitle,grid);

@@ -89,7 +89,7 @@ public class MainPage extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         userPic = new javax.swing.JLabel();
         usrNameLbl = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        mainTabPane = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -186,7 +186,7 @@ public class MainPage extends javax.swing.JFrame {
                 .addContainerGap(76, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("User1", jPanel1);
+        mainTabPane.addTab("User1", jPanel1);
 
         jTextArea5.setColumns(20);
         jTextArea5.setRows(5);
@@ -231,7 +231,7 @@ public class MainPage extends javax.swing.JFrame {
                 .addContainerGap(76, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("User3", jPanel6);
+        mainTabPane.addTab("User3", jPanel6);
 
         jTextArea3.setColumns(20);
         jTextArea3.setRows(5);
@@ -281,7 +281,7 @@ public class MainPage extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("User2", jPanel5);
+        mainTabPane.addTab("User2", jPanel5);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Online", "Offline", "Busy", "Away" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -310,6 +310,11 @@ public class MainPage extends javax.swing.JFrame {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        friendList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                friendListMouseClicked(evt);
+            }
         });
         friendList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -370,7 +375,7 @@ public class MainPage extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mainTabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(58, 58, 58)
@@ -392,7 +397,7 @@ public class MainPage extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                         .addComponent(userPic, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -404,7 +409,7 @@ public class MainPage extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jButton8)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTabbedPane1))
+                    .addComponent(mainTabPane))
                 .addGap(112, 112, 112))
         );
 
@@ -529,9 +534,12 @@ public class MainPage extends javax.swing.JFrame {
 
     
     
+    private void friendListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendListMouseClicked
+        mainTabPane.addTab("welcome", jPanel1);
+    }//GEN-LAST:event_friendListMouseClicked
+ 
     
-    
-     public void setUserNamelbl(String name){
+    public void setUserNamelbl(String name){
         //userName=name;
         
         this.usrNameLbl.setText(name);
@@ -617,12 +625,12 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextArea jTextArea5;
     private javax.swing.JTextArea jTextArea6;
+    private javax.swing.JTabbedPane mainTabPane;
     private javax.swing.JTextArea msgTA;
     private javax.swing.JButton sendBtn;
     private javax.swing.JLabel userPic;

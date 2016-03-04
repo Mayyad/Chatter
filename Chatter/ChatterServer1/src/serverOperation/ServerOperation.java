@@ -80,8 +80,8 @@ public class ServerOperation {
         
        dbConnection = new DBConnections.DBConnection();
        
-        String myFrineds = new String("");
-        String frndlst = new String ("");
+        String myFrineds = null;
+        String frndlst = null;
         try {
             stm = dbConnection.connection.createStatement();
             String query = new String("SELECT * FROM friends WHERE user_id = '"+id+"' ");

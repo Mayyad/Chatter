@@ -5,6 +5,7 @@
  */
 package chatterserver;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,8 +32,7 @@ public class MainPage extends javax.swing.JFrame {
      */
     public MainPage() {
         initComponents();
-        handler = new ServerSocketHandler(12345);
-        operationObj= new ServerOperation();
+
     }
 
     /**
@@ -345,24 +345,25 @@ public class MainPage extends javax.swing.JFrame {
         int statue = evt.getStateChange();
 
         if (statue == 1) {
-
-           // handler = new ServerSocketHandler(12345);
-
+            
             serverStatusLbl.setText("Server On");
-
+            handler = new ServerSocketHandler(12345);
+            operationObj = new ServerOperation();
         } else {
             // try {
             serverStatusLbl.setText("Server Off");
-            //handler.ss.close();
+            try {
+                handler.ss.close();
+                
+                handler.suspend();
+                
+            } catch (Exception ex) {
 
-            //   } catch (IOException ex) {
-            
-            // }
-            
+            }
+
         }
     }//GEN-LAST:event_jToggleButton2ItemStateChanged
 
-    
     /**
      * @param args the command line arguments
      */

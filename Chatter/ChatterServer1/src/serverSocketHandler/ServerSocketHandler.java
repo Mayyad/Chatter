@@ -24,9 +24,9 @@ import serverOperation.ServerOperation;
  *
  * @author ahmedsobhy
  */
-public class ServerSocketHandler {
+public class ServerSocketHandler extends Thread{
 
-    ServerSocket ss;
+    public ServerSocket ss;
     DBConnections.DBConnection dbConn;
     //serverOperation.ServerOperation operation ;
     serverOperation.ServerOperation operation;
@@ -36,24 +36,26 @@ public class ServerSocketHandler {
     public ServerSocketHandler(int port) {
         try {
             ss = new ServerSocket(port);
-
+            start();
         } catch (IOException ex) {
         }
-
-        while (true) {
+             
+    }
+    public void run(){
+         while (true) {
             try {
                 Socket s = ss.accept();
                 new ServerSocketStream(s);
             } catch (IOException ex) {
 
             }
+        }    
         }
-    }
-
+    
     public class ServerSocketStream extends Thread {
 
-        DataInputStream dis;
-        PrintStream ps;
+        public DataInputStream dis;
+        public PrintStream ps;
 
         public ServerSocketStream(Socket s) {
             try {

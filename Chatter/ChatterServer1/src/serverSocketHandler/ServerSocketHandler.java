@@ -140,12 +140,22 @@ public class ServerSocketHandler {
                             operationX = new ServerOperation();
                             String myName = operationX.returnName(myid);
                             String contactList = operationX.contactList(myid);
+                            
+                            if (contactList == null ){
+                                contactList = " ";
+                            }
                             String groupList = operationX.groupList(myid);
+                            if ( groupList == null )
+                            {
+                                groupList = " ";
+                            }
+                            
                             
                             System.out.println(myid);
                             System.out.println(groupList);
-                            //System.out.println(contactList);
-                            ps.println("1"+"$"+myName+"$"+contactList+"$"+groupList);
+                            System.out.println(contactList);
+                            ps.println("1"+"$"+myName+"$"+contactList+"$"+groupList+"$"+" ");
+                            
                            // handler.ps.println("3"+"$"+email+"$"+password);
                         }else{
                             System.out.println("Not Found");

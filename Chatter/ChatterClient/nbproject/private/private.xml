@@ -2,14 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-            <file>file:/home/ayyad/Chatter/Chatter/ChatterClient/src/chatterclient/controlGroup.java</file>
             <file>file:/home/ayyad/Chatter/Chatter/ChatterClient/src/chatterclient/Registration.java</file>
             <file>file:/home/ayyad/Chatter/Chatter/ChatterClient/src/chatterclient/MainPage.java</file>
+            <file>file:/home/ayyad/Chatter/Chatter/ChatterClient/src/socketHandler/ClientSocketHandler.java</file>
+            <file>file:/home/ayyad/Chatter/Chatter/ChatterClient/src/chatterclient/Login.java</file>
+            <file>file:/home/ayyad/Chatter/Chatter/ChatterClient/src/chatterclient/controlGroup.java</file>
         </group>
->>>>>>> 57bca9548fc0ae0a95adaed16d9b286637be61b9
     </open-files>
 </project-private>

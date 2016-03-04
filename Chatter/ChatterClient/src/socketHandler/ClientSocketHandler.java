@@ -56,24 +56,40 @@ public class ClientSocketHandler extends Thread {
                         String contactList= parts[2];
                         String groupList  = parts[3];
                         
-                        String[] singleContactList = contactList.split("\\*");
-                        String[] singleGroupList= groupList.split("\\*");
+                        if (contactList.equals(" "))
+                        {
+                            contactList = " ";
+                             mainPageObj.setFriendListModel("");
+                        }
+                        else {
+                            String[] singleContactList = contactList.split("\\*");
+                             int y = singleContactList.length;
+                             for ( int i =0 ;  i < y ;  i ++){
                         
-                        
-                        int y = singleContactList.length;
-                        int z = singleGroupList.length;
-                        
-                        for ( int i =0 ;  i < y ;  i ++){
-                            
-                            System.out.println(singleContactList[i]);
-                            mainPageObj.setFriendListModel(singleContactList[i]);
-                            
+                                System.out.println(singleContactList[i]);
+                                mainPageObj.setFriendListModel(singleContactList[i]);
+                            }
+                             
                         }
                         
-                        for(int i=0;i<z;i++){
-                            System.out.println(singleGroupList[i]);
-                            mainPageObj.setGroupListModel(singleGroupList[i]);
+                        
+                        if (groupList.equals(" "))
+                        {
+                            groupList = " ";
+                             mainPageObj.setGroupListModel("");
                         }
+                        
+                        else {
+                            String[] singleGroupList= groupList.split("\\*");
+
+                            int z = singleGroupList.length;
+
+                            for(int i=0;i<z;i++){
+                                System.out.println(singleGroupList[i]);
+                                mainPageObj.setGroupListModel(singleGroupList[i]);
+                            }
+                        }
+                        
                       
                         System.out.println(id);
                         System.out.println(loggedName);

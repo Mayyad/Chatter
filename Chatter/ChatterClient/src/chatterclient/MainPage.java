@@ -231,6 +231,11 @@ public class MainPage extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        groupList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                groupListMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(groupList);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -459,6 +464,33 @@ public class MainPage extends javax.swing.JFrame {
         XBtn.addActionListener(new MyCloseActionHandler(friendList.getSelectedValue()));
             
     }//GEN-LAST:event_friendListMouseClicked
+
+    private void groupListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_groupListMouseClicked
+        mainTabPane.addTab(groupList.getSelectedValue(), chatPanel);
+        
+        int index=mainTabPane.indexOfTab(groupList.getSelectedValue());
+        JPanel pnlTab = new JPanel(new GridBagLayout());
+        pnlTab.setOpaque(false);
+        JLabel lblTitle=new JLabel(groupList.getSelectedValue());
+        JButton XBtn = new JButton("X");
+        
+        GridBagConstraints grid = new GridBagConstraints();
+        grid.gridx = 0;
+        grid.gridy = 0;
+        grid.weightx = 1;
+        
+        
+        pnlTab.add(lblTitle,grid);
+        
+        grid.gridx++;
+        
+        grid.weightx = 0;
+        pnlTab.add(XBtn,grid);
+        
+        mainTabPane.setTabComponentAt(index, pnlTab);
+        
+        XBtn.addActionListener(new MyCloseActionHandler(groupList.getSelectedValue()));
+    }//GEN-LAST:event_groupListMouseClicked
  
    public class MyCloseActionHandler implements ActionListener {
     private String tabName;

@@ -245,10 +245,11 @@ public class ServerSocketHandler extends Thread{
                         operationX.createGroup(groupname, global_id);
                         
                         int group_id = operationX.returnGroupId(groupname);
-                        
+                        operationX.assignFriendToGroup(global_id, group_id);
                         for (int x =0 ;x<frndNo ; x++)
                         {
                             int frnd_id = operationX.returnId(frnds[x]);
+                            
                             if (operationX.checkFriend(frnd_id))
                             {
                                 operationX.assignFriendToGroup(frnd_id,group_id );

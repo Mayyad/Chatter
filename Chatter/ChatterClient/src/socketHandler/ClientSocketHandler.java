@@ -144,6 +144,10 @@ public class ClientSocketHandler extends Thread {
                     System.out.println("doesnt exist in database aslan !!!");
                     JOptionPane.showMessageDialog(null, "Doesnt exist in our database , this contact isnt on our application");
                     
+                }else if (ch == '5'){
+                 
+                    JOptionPane.showMessageDialog(null, "Some emails Doesnt exist in our database , The Rest was added successfully");
+                    
                 }else if (msg.equals("f")) {
                     System.out.println("Email Registered Before .. Please Enter Another one..");
                     JOptionPane.showMessageDialog(new Registration(), "Email here please enter another email !!");

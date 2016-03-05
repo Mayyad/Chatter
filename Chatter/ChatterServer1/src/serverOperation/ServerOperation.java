@@ -197,6 +197,42 @@ public class ServerOperation {
     }
     
     
+    public void assignFriendToGroup(int frnd_id , int group_id){
+        try {
+            dbConnection = new DBConnections.DBConnection();
+            stm = dbConnection.connection.createStatement();
+            String assign = new String ("INSERT INTO group_list  VALUES ( '"+group_id+"' , '"+frnd_id+"' )");
+            stm.execute(assign);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    public int returnGroupId(String group_name){
+        int id =0;
+        try {
+            dbConnection = new DBConnections.DBConnection();
+            stm = dbConnection.connection.createStatement();
+            
+            String returnn = new String ("SELECT group_id FROM groups WHERE group_name = '"+group_name+"'");
+            ResultSet s =  stm.executeQuery(returnn);
+            s.next();
+              id = s.getInt("group_id");
+            
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (id == 0 ){
+                return 0;
+            }
+            else {
+                return id ;
+            }
+    }
+    
+    
     
     
     

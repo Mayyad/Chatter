@@ -242,6 +242,26 @@ public class ServerSocketHandler extends Thread{
                         
                         int frndNo = frnds.length;
                         
+                        operationX.createGroup(groupname, global_id);
+                        
+                        int group_id = operationX.returnGroupId(groupname);
+                        
+                        for (int x =0 ;x<frndNo ; x++)
+                        {
+                            int frnd_id = operationX.returnId(frnds[x]);
+                            if (operationX.checkFriend(frnd_id))
+                            {
+                                operationX.assignFriendToGroup(frnd_id,group_id );
+                            }
+                            
+                            else {
+                                System.out.println("Not found");
+                                ps.println("5");
+                            }
+                        }
+                        
+                        
+                        
                         
                         
                         //System.out.println(y);

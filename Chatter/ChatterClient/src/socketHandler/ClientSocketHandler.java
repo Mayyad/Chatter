@@ -34,7 +34,7 @@ public class ClientSocketHandler extends Thread {
             socket = new Socket("localhost", 12345);
             dis = new DataInputStream(socket.getInputStream());
             ps = new PrintStream(socket.getOutputStream());
-            mainPageObj=new MainPage();
+           
         } catch (IOException ex) {
             System.err.println("error");
         }
@@ -52,7 +52,7 @@ public class ClientSocketHandler extends Thread {
                 if(ch=='1'){
                      //user exists
                     
-                    //MainPage mainPageObj = new MainPage();
+                    MainPage mainPageObj = new MainPage();
                     
                      
                      String[] parts = msg.split("\\$");

@@ -135,7 +135,7 @@ public class controlGroup extends javax.swing.JFrame {
         // TODO add your handling code here:
         String groupName = grpname.getText();
         System.out.println(frndsString);
-        handler.ps.println("5"+"$"+"groupname"+"$"+"frndsString");
+        handler.ps.println("5"+"$"+groupName+"$"+frndsString);
 //       
     }//GEN-LAST:event_createbtnActionPerformed
 

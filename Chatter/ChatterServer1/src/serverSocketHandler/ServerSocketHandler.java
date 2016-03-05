@@ -231,14 +231,20 @@ public class ServerSocketHandler extends Thread{
                     }else if (ch == '5')   
                     {
                         
-                        System.out.println("create grup");
+                        System.out.println("create group");
                      
                         String[] parts = str.split("\\$");
 //                      
                         String groupname = parts[1];
                         String frndsString = parts[2];
                         
-                        System.out.println(groupname);
+                        String[] frnds = frndsString.split("\\&");
+                        
+                        int frndNo = frnds.length;
+                        
+                        
+                        
+                        //System.out.println(y);
                         
                     }else {
                         System.out.println("nothing");

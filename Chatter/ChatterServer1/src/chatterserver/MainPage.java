@@ -139,6 +139,11 @@ public class MainPage extends javax.swing.JFrame {
                 jToggleButton2StateChanged(evt);
             }
         });
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
 
         serverStatusLbl.setText("Server Status");
 
@@ -529,6 +534,10 @@ public class MainPage extends javax.swing.JFrame {
          
         
     }//GEN-LAST:event_getallActionPerformed
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     /**
      * @param args the command line arguments

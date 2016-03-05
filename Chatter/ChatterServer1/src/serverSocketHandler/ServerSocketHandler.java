@@ -228,13 +228,17 @@ public class ServerSocketHandler extends Thread{
                                ps.println("4");
                            }
                        }
-                       
-                      
+                    }else if (ch == '5')   
+                    {
                         
-                         
+                        System.out.println("create grup");
                      
+                        String[] parts = str.split("\\$");
+//                      
+                        String groupname = parts[1];
+                        String frndsString = parts[2];
                         
-                        
+                        System.out.println(groupname);
                         
                     }else {
                         System.out.println("nothing");

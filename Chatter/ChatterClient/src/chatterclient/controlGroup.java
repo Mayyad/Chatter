@@ -5,6 +5,9 @@
  */
 package chatterclient;
 
+import socketHandler.ClientSocketHandler;
+
+
 /**
  *
  * @author ayyad
@@ -14,6 +17,10 @@ public class controlGroup extends javax.swing.JFrame {
     /**
      * Creates new form controlGroup
      */
+    String frndsString = "" ;
+    ClientSocketHandler handler = new ClientSocketHandler();
+    
+    
     public controlGroup() {
         initComponents();
     }
@@ -31,7 +38,7 @@ public class controlGroup extends javax.swing.JFrame {
         namelbl = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         createbtn = new javax.swing.JButton();
-        frndlabl = new javax.swing.JTextField();
+        frndLbl = new javax.swing.JTextField();
         addusrbtn = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
@@ -54,13 +61,18 @@ public class controlGroup extends javax.swing.JFrame {
             }
         });
 
-        frndlabl.addActionListener(new java.awt.event.ActionListener() {
+        frndLbl.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                frndlablActionPerformed(evt);
+                frndLblActionPerformed(evt);
             }
         });
 
         addusrbtn.setText("Add ");
+        addusrbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addusrbtnActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("close");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -83,7 +95,7 @@ public class controlGroup extends javax.swing.JFrame {
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(grpname, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                            .addComponent(frndlabl)))
+                            .addComponent(frndLbl)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(72, 72, 72)
                         .addComponent(createbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -103,7 +115,7 @@ public class controlGroup extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(frndlabl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(frndLbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addusrbtn))
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -121,16 +133,29 @@ public class controlGroup extends javax.swing.JFrame {
 
     private void createbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createbtnActionPerformed
         // TODO add your handling code here:
+        String groupName = grpname.getText();
+        System.out.println(frndsString);
+        handler.ps.println("5"+"$"+"groupname"+"$"+"frndsString");
+//       
     }//GEN-LAST:event_createbtnActionPerformed
 
-    private void frndlablActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_frndlablActionPerformed
+    private void frndLblActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_frndLblActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_frndlablActionPerformed
+    }//GEN-LAST:event_frndLblActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void addusrbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addusrbtnActionPerformed
+        // TODO add your handling code here:
+        
+        frndsString += frndLbl.getText();
+        frndsString += "&";
+        frndLbl.setText("");
+        //System.out.println(frndsString);
+    }//GEN-LAST:event_addusrbtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,7 +195,7 @@ public class controlGroup extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addusrbtn;
     private javax.swing.JButton createbtn;
-    private javax.swing.JTextField frndlabl;
+    private javax.swing.JTextField frndLbl;
     private javax.swing.JTextField grpname;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

@@ -23,10 +23,10 @@ public class Chatter {
         //MainPage mainPage=new MainPage();
         //mainPage.setVisible(true);
         ServerOperation s = new ServerOperation();
-        int test = s.genderFemaleStat();
         
+        int x = s.returnId("sodjjfsdkj");
         
-       System.out.println(test);
+        System.out.println(x);
     }
     
 }

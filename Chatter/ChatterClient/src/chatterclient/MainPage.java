@@ -33,7 +33,7 @@ import socketHandler.*;
 public class MainPage extends javax.swing.JFrame {
 
     ClientSocketHandler handler;
-    
+    String friendmail;
     DefaultListModel<String> friendListModel ;
     DefaultListModel<String> groupListModel;
     public ArrayList<String> emails;
@@ -110,7 +110,7 @@ public class MainPage extends javax.swing.JFrame {
         sendFileBtn = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton4 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        addFriendBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         Cntctlbl = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -205,10 +205,10 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
 
-        jButton8.setText("Add Friend");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        addFriendBtn.setText("Add Friend");
+        addFriendBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                addFriendBtnActionPerformed(evt);
             }
         });
 
@@ -298,7 +298,7 @@ public class MainPage extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addFriendBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton4))
                         .addGap(95, 95, 95))))
         );
@@ -317,7 +317,7 @@ public class MainPage extends javax.swing.JFrame {
                         .addGap(44, 44, 44)
                         .addComponent(jButton4)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton8)
+                        .addComponent(addFriendBtn)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(mainTabPane))
                 .addGap(112, 112, 112))
@@ -395,17 +395,21 @@ public class MainPage extends javax.swing.JFrame {
             
     }//GEN-LAST:event_friendListValueChanged
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+    private void addFriendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFriendBtnActionPerformed
+       
+        
 
         JFrame frame = new JFrame();
-        String friendmail = JOptionPane.showInputDialog(
+        friendmail = JOptionPane.showInputDialog(
             frame,
             "Enter you friend here",
             "Add friend ",
             JOptionPane.PLAIN_MESSAGE
         );
-    }//GEN-LAST:event_jButton8ActionPerformed
+        
+        handler.ps.println("4"+"$"+friendmail);
+            
+    }//GEN-LAST:event_addFriendBtnActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -515,13 +519,13 @@ public class MainPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Cntctlbl;
     private javax.swing.JPanel MainPanel;
+    private javax.swing.JButton addFriendBtn;
     private javax.swing.JTextArea chatMsgs;
     private javax.swing.JPanel chatPanel;
     private javax.swing.JList<String> friendList;
     private javax.swing.JList<String> groupList;
     private javax.swing.JLabel grplbl;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

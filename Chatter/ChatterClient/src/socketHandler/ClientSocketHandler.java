@@ -27,12 +27,14 @@ public class ClientSocketHandler extends Thread {
     public PrintStream ps;   //byb3t
     //CustomTabePane tab;
     //MainPage mainPg;
+    MainPage mainPageObj ;
     public ClientSocketHandler() {
 
         try {
             socket = new Socket("localhost", 12345);
             dis = new DataInputStream(socket.getInputStream());
             ps = new PrintStream(socket.getOutputStream());
+            mainPageObj=new MainPage();
         } catch (IOException ex) {
             System.err.println("error");
         }
@@ -50,7 +52,7 @@ public class ClientSocketHandler extends Thread {
                 if(ch=='1'){
                      //user exists
                     
-                    MainPage mainPageObj = new MainPage();
+                    //MainPage mainPageObj = new MainPage();
                     
                      
                      String[] parts = msg.split("\\$");
@@ -87,7 +89,7 @@ public class ClientSocketHandler extends Thread {
                         if (groupList.equals(" "))
                         {
                             groupList = " ";
-                             mainPageObj.setGroupListModel("");
+                            mainPageObj.setGroupListModel("");
                         }
                         
                         else {
@@ -100,6 +102,7 @@ public class ClientSocketHandler extends Thread {
                                 mainPageObj.setGroupListModel(singleGroupList[i]);
                             }
                         }
+                        
                         
                       
                         System.out.println(id);
@@ -121,13 +124,27 @@ public class ClientSocketHandler extends Thread {
                     //userNameLbl.setText("User Name");
                     // mainPageObj.setUserNamelbl("xxx");
                 } else if (ch == '0') {
-                    //user Not found
+                    //us//ab3t lel client en mafesh mail fe db esmo kdaer Not found
                     System.out.println("mesh mawgood");
                     JOptionPane.showMessageDialog(null, "Not found");
                     Login loginObj = new Login();
                     loginObj.setVisible(true);
 
-                } else if (msg.equals("f")) {
+                }else if(ch=='2'){
+                   
+                    System.out.println("add friend done");
+                    
+                    
+                }else if(ch == '3'){ 
+                   
+                    System.out.println("friend already 3andk aslan "); 
+                    JOptionPane.showMessageDialog(null, "this contact is already your friend :)");
+                }else if(ch == '4'){
+                    
+                    System.out.println("doesnt exist in database aslan !!!");
+                    JOptionPane.showMessageDialog(null, "Doesnt exist in our database , this contact isnt on our application");
+                    
+                }else if (msg.equals("f")) {
                     System.out.println("Email Registered Before .. Please Enter Another one..");
                     JOptionPane.showMessageDialog(new Registration(), "Email here please enter another email !!");
                 } else {
@@ -161,5 +178,10 @@ public class ClientSocketHandler extends Thread {
     void sendMsg(String msg) {
         ps.println(msg);
     }
+    
+    
+    
+
+    
 
 }

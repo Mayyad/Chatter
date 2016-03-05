@@ -30,6 +30,7 @@ public class ServerSocketHandler extends Thread{
     public ServerSocket ss;
     DBConnections.DBConnection dbConn;
     //serverOperation.ServerOperation operation ;
+     int global_id ;
     serverOperation.ServerOperation operation;
 
     serverOperation.ServerOperation operationX;
@@ -120,7 +121,7 @@ public class ServerSocketHandler extends Thread{
                         //get(i).ps.println();
 //                        for(ServerSocketStream ss:clients){
 //                            ss.ps.println(msg);
-//                        }
+//                     amagdy529   }
                         
                         //from-to id's and message to save it at database....
                         operation.sendMessage(from,to,msg);
@@ -160,6 +161,8 @@ public class ServerSocketHandler extends Thread{
                             System.out.println("user exists");
                             System.out.println(" \n congratulations !");
                             int myid = rs.getInt("user_id");
+                            
+                            global_id = myid ;
                             emails.add(email);
                             
                             operationX = new ServerOperation();
@@ -180,7 +183,9 @@ public class ServerSocketHandler extends Thread{
                             System.out.println(myid);
                             System.out.println(groupList);
                             System.out.println(contactList);
+                            operationX.setOnline(myid);
                             ps.println("1"+"$"+myName+"$"+contactList+"$"+groupList+"$"+friendsEmail);
+                            
                             
                            // handler.ps.println("3"+"$"+email+"$"+password);
                         }else{
@@ -189,7 +194,49 @@ public class ServerSocketHandler extends Thread{
                         }
 
                         //System.out.println(str);
-                    } else {
+                    }else if (ch == '4'){
+                     
+                        System.out.println("add friend");
+
+                        String[] parts = str.split("\\$");
+
+                        String id = parts[0];
+                        String friendMail = parts[1];
+                        
+                        System.out.println(id);
+                        System.out.println(friendMail);
+                        
+                       if (operationX.returnId(friendMail) == 0){
+                           
+                           System.out.println("msh mwgood fel db"); //ab3t lel client en mafesh mail fe db esmo kda 
+                           ps.println("4");
+                       }
+                       else {
+                              int frnd_id = operationX.returnId(friendMail);
+                              if (operationX.addFriend(global_id, frnd_id) == 1)
+                           {
+                               System.out.println("done"); // done hyb3t rakam 2
+                               ps.println("2");
+                           }
+                           else if (operationX.addFriend(global_id, frnd_id) == 0) {
+                               System.out.println("Already your friend"); // ab3t lel client en el frnd dh 3ndy asln 
+                               ps.println("3");
+                           }
+                           else if (operationX.addFriend(global_id, frnd_id) == 3)
+                           {
+                               System.out.println("msh mwgood fel db"); //ab3t lel client en mafesh mail fe db esmo kda
+                               ps.println("4");
+                           }
+                       }
+                       
+                      
+                        
+                         
+                     
+                        
+                        
+                        
+                    }else {
                         System.out.println("nothing");
                     }
 
@@ -213,6 +260,11 @@ public class ServerSocketHandler extends Thread{
                 System.out.println("server down");
             }
         }
+        
+        
+        
+        
+        
     }
 
 }

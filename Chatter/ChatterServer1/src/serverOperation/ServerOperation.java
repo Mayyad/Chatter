@@ -200,22 +200,105 @@ public class ServerOperation {
     
     
     
-    public void addFriend(int my_id , int frnd_id)
+    public int addFriend(int my_id , int frnd_id)
     {
          dbConnection = new DBConnections.DBConnection();
-        try {
-            stm = dbConnection.connection.createStatement();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
-        }
-          String addfrnd = new String ("INSERT INTO friends " + "VALUES ('"+my_id+"' , '"+frnd_id+"')");
-        try {
-            stm.execute(addfrnd);
-        } catch (SQLException ex) {
-            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         
+        
+         if (checkFriend(frnd_id))
+         {
+             
+             if (checkIsAlreadyHas(my_id , frnd_id)){
+                   //System.out.println("Already your friend");
+                    return 0;
+             }
+             else{
+                 
+                 try {
+                     stm = dbConnection.connection.createStatement();
+                     String addfrnd = new String ("INSERT INTO friends " + "VALUES ('"+my_id+"' , '"+frnd_id+"')");
+                     stm.execute(addfrnd);
+                     return 1;
+                 } catch (SQLException ex) {
+                     Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+             }
+          
+         }
+         else
+         {
+            return 3;// System.out.println("Not found");
+         }
+         return 3;
     }
+
+
+    
+    public boolean checkFriend(int friend_id){
+        int exsistFlag = 0;
+        try {
+            
+            dbConnection = new DBConnections.DBConnection();
+            stm = dbConnection.connection.createStatement();
+            
+            String ids = new String ("SELECT user_id FROM users");
+            
+            ResultSet allUserIdRs = stm.executeQuery(ids);
+            
+            while (exsistFlag == 0){
+                while (allUserIdRs.next() )
+                {
+                    int x = allUserIdRs.getInt(1);
+                    
+                    if ( friend_id == x )
+                    {
+                        exsistFlag = 1;
+                        return true;
+                    }
+                }
+                return false ;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    
+    
+    
+    
+    // check if the user in my friend list or not ! 
+    
+    public boolean checkIsAlreadyHas(int my_id , int frnd_id){
+        try {
+            int exsistFlag = 0;
+            dbConnection = new DBConnections.DBConnection();
+            stm = dbConnection.connection.createStatement();
+            String ids = new String ("SELECT friend_id FROM friends WHERE user_id = '"+my_id+"' ");
+            
+            ResultSet allUserIdRs = stm.executeQuery(ids);
+            
+            while (exsistFlag == 0){
+                
+                while (allUserIdRs.next() )
+                {
+                    int x = allUserIdRs.getInt(1);
+                    
+                    if ( frnd_id  == x )
+                    {
+                        exsistFlag = 1;
+                        return true;
+                    }
+                }
+                return false ;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false ;
+    }
+
     
     
     
@@ -241,6 +324,37 @@ public class ServerOperation {
          
         return name ;
     }
+    
+    
+    
+    
+    public int returnId (String us_name )
+    {
+        dbConnection = new DBConnections.DBConnection();
+        int id = 0 ;
+        try {
+            stm = dbConnection.connection.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         String query = new String("SELECT * FROM users WHERE email = '"+us_name+"' ");
+        try {
+           ResultSet s =  stm.executeQuery(query);
+           s.next();
+           id = s.getInt("user_id");
+        } catch (SQLException ex) {
+            //Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         if (id == 0 ){
+             return 0;
+         }
+         else {
+           return id ;
+         }
+       
+    }
+    
+    
     
     public void setOnline (int id)
     {

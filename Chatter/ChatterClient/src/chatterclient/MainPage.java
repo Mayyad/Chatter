@@ -4,15 +4,23 @@
  * and open the template in the editor.
  */
 package chatterclient;
+
+import JavaBeans.Message;
 import JavaBeans.User;
 import TabPaneHandler.CustomTabePane;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
@@ -20,61 +28,64 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import socketHandler.ClientSocketHandler;
 import socketHandler.*;
-
 
 /**
  *
  * @author ahmedsobhy
  */
-public class MainPage extends javax.swing.JFrame {
+public class MainPage extends javax.swing.JFrame implements interfaceobserver.MessageListener {
 
     ClientSocketHandler handler;
     String friendmail;
-    DefaultListModel<String> friendListModel ;
+    DefaultListModel<String> friendListModel;
     DefaultListModel<String> groupListModel;
     public ArrayList<String> emails;
     User user;
     int index;
-    CustomTabePane tabFriendList,tabGroupList;
-    
+    CustomTabePane tabFriendList, tabGroupList;
+    boolean f;
+    public LinkedHashMap<Integer, CustomTabePane> tabs;
+
     /**
      * Creates new form MainPage
      */
     public MainPage() {
         initComponents();
-        handler=new ClientSocketHandler();
-        emails =new ArrayList<String>();
+        handler = new ClientSocketHandler();
+        emails = new ArrayList<String>();
         usrNameLbl.setText(getUserNamelbl());
-        
+
         friendListModel = new DefaultListModel<>();
         friendList.setModel(friendListModel);
         friendListModel.addElement(userName);
-        
-        groupListModel=new DefaultListModel<>();
+
+        groupListModel = new DefaultListModel<>();
         groupList.setModel(groupListModel);
         groupListModel.addElement(userName);
-        user=User.getInstance();
+        user = User.getInstance();
+        tabs = new LinkedHashMap<>();
     }
 
     /* set and get for the friend */
-   
     public void setFriendListModel(String friendListX) {
         //this.friendList1 = friendList1;
         friendListModel.addElement(friendListX);
     }
 
-    
     public DefaultListModel<String> getFriendListModel() {
         return friendListModel;
     }
 
-   
     /* set and get for the group */
-
     public void setGroupListModel(String groupListX) {
         //this.groupListModel = groupListModel;
         groupListModel.addElement(groupListX);
@@ -83,10 +94,7 @@ public class MainPage extends javax.swing.JFrame {
     public DefaultListModel<String> getGroupListModel() {
         return groupListModel;
     }
-    
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,16 +106,8 @@ public class MainPage extends javax.swing.JFrame {
 
         MainPanel = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        userPic = new javax.swing.JLabel();
         usrNameLbl = new javax.swing.JLabel();
         mainTabPane = new javax.swing.JTabbedPane();
-        chatPanel = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        chatMsgs = new javax.swing.JTextArea();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        msgTA = new javax.swing.JTextArea();
-        sendMsgBtn = new javax.swing.JButton();
-        sendFileBtn = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton4 = new javax.swing.JButton();
         addFriendBtn = new javax.swing.JButton();
@@ -126,7 +126,6 @@ public class MainPage extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
 
@@ -134,62 +133,7 @@ public class MainPage extends javax.swing.JFrame {
 
         MainPanel.setLayout(new java.awt.BorderLayout(3, 3));
 
-        userPic.setBackground(new java.awt.Color(226, 37, 53));
-        userPic.setForeground(new java.awt.Color(191, 68, 68));
-        userPic.setText("User Pic");
-
         usrNameLbl.setText("User Name");
-
-        chatMsgs.setEditable(false);
-        chatMsgs.setColumns(20);
-        chatMsgs.setRows(5);
-        jScrollPane4.setViewportView(chatMsgs);
-
-        msgTA.setColumns(20);
-        msgTA.setRows(5);
-        jScrollPane5.setViewportView(msgTA);
-
-        sendMsgBtn.setText("Send");
-        sendMsgBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sendMsgBtnActionPerformed(evt);
-            }
-        });
-
-        sendFileBtn.setText("Send File");
-
-        javax.swing.GroupLayout chatPanelLayout = new javax.swing.GroupLayout(chatPanel);
-        chatPanel.setLayout(chatPanelLayout);
-        chatPanelLayout.setHorizontalGroup(
-            chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(chatPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(chatPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(sendMsgBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(sendFileBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane4))
-                .addContainerGap())
-        );
-        chatPanelLayout.setVerticalGroup(
-            chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(chatPanelLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(chatPanelLayout.createSequentialGroup()
-                        .addComponent(sendMsgBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(sendFileBtn)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        mainTabPane.addTab("User2", chatPanel);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Online", "Offline", "Busy", "Away" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -284,72 +228,79 @@ public class MainPage extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(mainTabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(mainTabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(userPic, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(20, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(usrNameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(addFriendBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton4))
-                        .addGap(95, 95, 95))))
+                        .addGap(95, 95, 95))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(usrNameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(userPic, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(usrNameLbl)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(44, 44, 44)
-                        .addComponent(jButton4)
-                        .addGap(18, 18, 18)
-                        .addComponent(addFriendBtn)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(mainTabPane))
-                .addGap(112, 112, 112))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(mainTabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                                .addComponent(usrNameLbl)
+                                .addGap(26, 26, 26)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(69, 69, 69)
+                                .addComponent(jButton4)
+                                .addGap(18, 18, 18)
+                                .addComponent(addFriendBtn)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(112, 112, 112))))
         );
 
         MainPanel.add(jPanel4, java.awt.BorderLayout.PAGE_START);
 
         jMenu1.setText("Control");
 
+        jMenuItem1.setMnemonic('O');
         jMenuItem1.setText("Sign-out");
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Exit");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
 
-        jMenu3.setText("Theems");
+        jMenu3.setText("Themes");
 
-        jMenuItem4.setText("Windows");
+        jMenuItem4.setText("Metal");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem4);
 
-        jMenuItem5.setText("Linux");
+        jMenuItem5.setText("Unix");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
             }
         });
         jMenu3.add(jMenuItem5);
-
-        jMenuItem6.setText("Mac");
-        jMenu3.add(jMenuItem6);
 
         jMenuBar1.add(jMenu3);
 
@@ -384,103 +335,129 @@ public class MainPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        SwingUtilities.updateComponentTreeUI(this);
+        this.pack();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void friendListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_friendListValueChanged
-            
+
         //Open new taaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaappppp
-        
-        
-            
+
     }//GEN-LAST:event_friendListValueChanged
 
     private void addFriendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFriendBtnActionPerformed
-       
-        
 
         JFrame frame = new JFrame();
         friendmail = JOptionPane.showInputDialog(
-            frame,
-            "Enter you friend here",
-            "Add friend ",
-            JOptionPane.PLAIN_MESSAGE
+                frame,
+                "Enter you friend here",
+                "Add friend ",
+                JOptionPane.PLAIN_MESSAGE
         );
-        
-        handler.ps.println("4"+"$"+friendmail);
-            
+
+        handler.ps.println("4" + "$" + friendmail);
+
     }//GEN-LAST:event_addFriendBtnActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         //this.setVisible(false);
 
-        new  controlGroup().setVisible(true);
+        new controlGroup().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void sendMsgBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendMsgBtnActionPerformed
-
-      //send if the index belong to friend list only....
-      String msg =  msgTA.getText();
-      
-      String from = user.getEmail();
-      String to = emails.get(tabFriendList.index-1);
-      
-      chatMsgs.setText(chatMsgs.getText()+"\nuser name :"+" Msg");
-      
-      try{           
-        handler.ps.println("2"+msg+"$"+from+"$"+to);
-      }catch(Exception e){
-          System.out.println("error...");
-      }
-      System.out.println(emails.get(tabFriendList.index-1));
-      System.out.println(tabFriendList.index);
-         
-    }//GEN-LAST:event_sendMsgBtnActionPerformed
-
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-        JFrame frame = new JFrame();
-        String friendmail = JOptionPane.showInputDialog(
-            frame,
-            "All Rights ",
-            "About us ",
-            JOptionPane.PLAIN_MESSAGE
-        );
-        
+        // show a joptionpane dialog using showMessageDialog
+        JOptionPane.showMessageDialog(this,
+                "AMS-Team .. Open Source .. Intake 36 .. Nozha Branch.",
+                "About Us...",
+                JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    
-    
+
     private void friendListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendListMouseClicked
-       tabFriendList=new CustomTabePane(mainTabPane,friendList,index,chatPanel);
-       tabFriendList.addTab();
+        PanelCreation panel = new PanelCreation();
+        tabFriendList = new CustomTabePane(mainTabPane, friendList, this.friendList.getSelectedIndex(), panel);
+
+        if (tabs.isEmpty()) {
+            tabFriendList.addTab();
+            tabs.put(this.friendList.getSelectedIndex(), tabFriendList);
+        } else {
+            for (Entry<Integer, CustomTabePane> entry : tabs.entrySet()) {
+                System.out.println("sss");
+                System.out.println("key" + entry.getKey());
+                System.out.println("item index" + this.friendList.getSelectedIndex());
+                if (entry.getKey() == this.friendList.getSelectedIndex()) {
+                    f = false;
+                    System.out.println(f);
+                    break;
+                } else {
+                    f = true;
+                    System.out.println(f);
+                }
+            }
+            System.out.println("f >>" + f);
+            if (f == true) {
+                tabFriendList.addTab();
+                tabs.put(this.friendList.getSelectedIndex(), tabFriendList);
+                System.out.println("f=false");
+            }
+        }
+        System.out.println("end");
     }//GEN-LAST:event_friendListMouseClicked
 
     private void groupListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_groupListMouseClicked
-       tabGroupList=new CustomTabePane(mainTabPane,groupList,index,chatPanel);
-       tabGroupList.addTab();
+       // tabGroupList = new CustomTabePane(mainTabPane, groupList, index, panel);
+        //tabGroupList.addTab();
     }//GEN-LAST:event_groupListMouseClicked
- 
 
-    public void setUserNamelbl(String name){
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+            SwingUtilities.updateComponentTreeUI(this);
+            this.pack();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    public void setUserNamelbl(String name) {
         //userName=name;
-        
+
         this.usrNameLbl.setText(name);
     }
-    
+
     String userName;
-    String getUserNamelbl(){
+
+    String getUserNamelbl() {
         return userName;
     }
-    
-    
 
-    
     /**
      * @param args the command line arguments
      */
@@ -520,8 +497,6 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JLabel Cntctlbl;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JButton addFriendBtn;
-    private javax.swing.JTextArea chatMsgs;
-    private javax.swing.JPanel chatPanel;
     private javax.swing.JList<String> friendList;
     private javax.swing.JList<String> groupList;
     private javax.swing.JLabel grplbl;
@@ -536,19 +511,160 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane mainTabPane;
-    private javax.swing.JTextArea msgTA;
-    private javax.swing.JButton sendFileBtn;
-    private javax.swing.JButton sendMsgBtn;
-    private javax.swing.JLabel userPic;
     private javax.swing.JLabel usrNameLbl;
     // End of variables declaration//GEN-END:variables
+class PanelCreation extends JPanel {
+
+        private javax.swing.JButton sendMsgBtn;
+        private javax.swing.JButton sendFileBtn;
+        private javax.swing.JTextArea msgTA;
+        private javax.swing.JTextArea chatMsgs;
+        private javax.swing.JScrollPane jScrollPane5;
+        private javax.swing.JScrollPane jScrollPane4;
+        JPanel panelbtn,msgPanel,msgsPanel;
+        public PanelCreation() {
+
+            chatMsgs = new javax.swing.JTextArea();
+            msgTA = new javax.swing.JTextArea();
+            sendMsgBtn = new javax.swing.JButton();
+            jScrollPane5 = new javax.swing.JScrollPane(msgTA);
+            jScrollPane4 = new javax.swing.JScrollPane(chatMsgs);
+            sendFileBtn = new javax.swing.JButton();
+            panelbtn=new JPanel();
+            msgPanel=new JPanel(new GridLayout(1,2));
+            msgsPanel=new JPanel();
+            
+            msgTA.setColumns(18);
+            msgTA.setRows(3);
+            
+            chatMsgs.setEditable(false);
+            chatMsgs.setColumns(39);
+            chatMsgs.setRows(5);
+           
+            this.setLayout(new GridLayout(3,3));
+            this.add(msgsPanel);           
+            this.add(msgPanel);
+            this.add(panelbtn);
+            msgTA.setAlignmentX(CENTER_ALIGNMENT);
+            
+            msgsPanel.add(jScrollPane4);
+            msgPanel.add(jScrollPane5);
+            msgPanel.add(panelbtn);
+            panelbtn.add(sendMsgBtn);
+            sendMsgBtn.setSize(30, 20);
+            sendMsgBtn.setText("Send");
+            sendMsgBtn.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendMsgBtnActionPerformed(evt);
+                }
+            });       
+        }
+
+        public void addPanel() {
+
+        }
+
+        private void sendMsgBtnActionPerformed(java.awt.event.ActionEvent evt) {
+
+            //send if the index belong to friend list only....
+            String msg = msgTA.getText();
+
+            String from = user.getEmail();
+            String to = emails.get(tabFriendList.index - 1);
+
+            chatMsgs.setText(chatMsgs.getText() +userName+" :" + msg+"\n");
+
+            try {
+                handler.ps.println("2" + msg + "$" + from + "$" + to);
+            } catch (Exception e) {
+                System.out.println("error...");
+            }
+            System.out.println(emails.get(tabFriendList.index - 1));
+            System.out.println(tabFriendList.index);
+
+        }
+    }
+
+     String msg2;
+     
+//     private int valueToIndex(JList list, String value) {
+// 	
+//         int size = list.getModel().getSize();
+// 	
+//         for (int i=0;i < size;i++) {
+// 	
+//             String str = list.(list, i);
+// 	
+//             if (ExtendedComparator.stringsMatch(value, str)) {
+// 	
+//                 return i;
+// 	  	
+//             }
+// 	  	
+//         }
+// 
+//         return -1;
+//   	
+//     }
+     
+    @Override
+    public void receiveMessage() {
+        System.out.println("law el tab maffto7aa append --- else eft7 el tab bta3 ely b3t el msg");
+        System.out.println("end");
+        PanelCreation panel = new PanelCreation();        
+        String m=Message.getMessage();
+        System.out.println(" message : " + m);
+        String[] parts = m.split("\\$");
+        String msg1 = parts[0];
+        String from = parts[1];
+        String to= parts[2];
+        
+        
+//        friendList.get
+        System.out.println("tab opening");
+        CustomTabePane cjp = new CustomTabePane(mainTabPane,friendList,0,panel);
+        cjp.addTab(from);
+        JOptionPane.showMessageDialog(mainTabPane,from+":"+msg1,"New Message Received",JOptionPane.PLAIN_MESSAGE);
+
+//        CustomTabePane tabFriendList = new CustomTabePane(mainTabPane, friendList,2, panel);
+//        System.out.println(index);
+//        this.tabFriendList.addTab("mm");
+//        System.out.println("endTab");
+        
+        /*
+        if (tabs.isEmpty()) {
+            tabFriendList.addTab();
+            tabs.put(this.friendList.getSelectedIndex(), tabFriendList);
+        } else {
+            for (Entry<Integer, CustomTabePane> entry : tabs.entrySet()) {
+                System.out.println("sss");
+                System.out.println("key" + entry.getKey());
+                System.out.println("item index" + this.friendList.getSelectedIndex());
+                if (entry.getKey() == this.friendList.getSelectedIndex()) {
+                    f = false;
+                    System.out.println(f);
+                    break;
+                } else {
+                    f = true;
+                    System.out.println(f);
+                }
+            }
+            System.out.println("f >>" + f);
+            if (f == true) {
+                tabFriendList.addTab();
+                tabs.put(this.friendList.getSelectedIndex(), tabFriendList);
+                System.out.println("f=false");
+            }
+        }
+        System.out.println("end");
+        //
+*/
+    }
+
 }

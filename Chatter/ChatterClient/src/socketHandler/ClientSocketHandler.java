@@ -5,15 +5,19 @@
  */
 package socketHandler;
 
+import JavaBeans.Message;
 import JavaBeans.User;
 import TabPaneHandler.CustomTabePane;
 import chatterclient.*;
+import java.awt.event.MouseEvent;
 
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,7 +31,8 @@ public class ClientSocketHandler extends Thread {
     public PrintStream ps;   //byb3t
     //CustomTabePane tab;
     //MainPage mainPg;
-    MainPage mainPageObj ;
+    MainPage mainPageObj;
+    String msg;
     public ClientSocketHandler() {
 
         try {
@@ -45,14 +50,14 @@ public class ClientSocketHandler extends Thread {
     public void run() {
         while (true) {
             try {
-                String msg=dis.readLine();
+                msg=dis.readLine();
                 System.out.println(msg);
                 char ch=msg.charAt(0);
                 System.out.println("el char aheh\t"+ch);
                 if(ch=='1'){
                      //user exists
                     
-                    MainPage mainPageObj = new MainPage();
+                    mainPageObj = new MainPage();
                     
                      
                      String[] parts = msg.split("\\$");
@@ -63,7 +68,7 @@ public class ClientSocketHandler extends Thread {
                         String groupList  = parts[3];
                         String friendsEmail  = parts[4];
                         
-                        if (contactList.equals(" "))
+                        if (contactList.equals(""))
                         {
                             contactList = " ";
                             mainPageObj.setFriendListModel("");
@@ -148,23 +153,45 @@ public class ClientSocketHandler extends Thread {
                  
                     JOptionPane.showMessageDialog(null, "Some emails Doesnt exist in our database , The Rest was added successfully");
                     
-                }else if (msg.equals("f")) {
+                }else if (ch=='6'){
+                    String[] parts = msg.split("\\$");
+                    String msgToAll = parts[1];
+                    JOptionPane.showMessageDialog(null, "message From Admin : " +msgToAll);
+                }
+                
+                
+                else if (msg.equals("f")) {
                     System.out.println("Email Registered Before .. Please Enter Another one..");
                     JOptionPane.showMessageDialog(new Registration(), "Email here please enter another email !!");
                 } else {
                     //new message recieved 
+                    mainPageObj = new MainPage();
                     System.out.println(msg);
                     
-                                      
+                    String[] parts = msg.split("\\$");
+                        
+                    String msg1 = parts[0];
+                    String from = parts[1];
+                    String to= parts[2];
+                     
+                    System.out.println(msg1);
+                   
+                    Message.setMessage(msg);
+                    Initiator initiater = new Initiator();
+                    initiater.addObserver(mainPageObj);
+                     
+                    initiater.sendMessage();
+                             
                 }
             } catch (IOException ex) {
+                
                 System.out.println("error hereee");
                 MainPage mainPg=new MainPage();
                 JOptionPane.showMessageDialog(mainPg,
 					"Server down....",
 					"Server  error",
 					JOptionPane.ERROR_MESSAGE);
-					System.exit(1);
+					System.exit(1);                           
             }
         }
     }
@@ -183,9 +210,22 @@ public class ClientSocketHandler extends Thread {
         ps.println(msg);
     }
     
-    
-    
-
-    
-
+    class Initiator{
+        private List<interfaceobserver.MessageListener> observers=new ArrayList<interfaceobserver.MessageListener>();
+        
+        public void addObserver(interfaceobserver.MessageListener observer){
+            observers.add(observer);
+        }
+        
+        public void sendMessage(){
+            System.out.println("Message >>>> "+msg);
+            
+            
+            for(interfaceobserver.MessageListener observer:observers){
+                observer.receiveMessage();
+            }
+        }
+   
+    }
+   
 }

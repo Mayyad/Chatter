@@ -113,12 +113,12 @@ public class MainPage extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         offlineList = new javax.swing.JList<>();
         jPanel1 = new javax.swing.JPanel();
-        anouncmentMsgTF = new javax.swing.JTextField();
         sendAnouncmentBtn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        anouncArea = new javax.swing.JTextArea();
         MenuBar = new javax.swing.JMenuBar();
         file = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        info = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -353,38 +353,48 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
 
+        anouncArea.setColumns(20);
+        anouncArea.setRows(5);
+        jScrollPane1.setViewportView(anouncArea);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(anouncmentMsgTF, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(34, 34, 34)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
                 .addComponent(sendAnouncmentBtn)
-                .addContainerGap(224, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(anouncmentMsgTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sendAnouncmentBtn))
-                .addContainerGap(260, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(119, 119, 119)
+                        .addComponent(sendAnouncmentBtn))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
 
         MainTabbedPane.addTab("Send Announcment", jPanel1);
 
         file.setText("File");
 
+        jMenuItem1.setMnemonic('E');
         jMenuItem1.setText("Exit");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         file.add(jMenuItem1);
 
         MenuBar.add(file);
-
-        info.setText("Edit");
-        MenuBar.add(info);
 
         setJMenuBar(MenuBar);
 
@@ -413,19 +423,13 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_MainTabbedPaneMouseClicked
 
     private void sendAnouncmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendAnouncmentBtnActionPerformed
-        try {
+        
             // TODO add your handling code here:
-            anouncmentMsgStr = anouncmentMsgTF.getText();
-            dbConn = new DBConnections.DBConnection();
-            Statement stmt = dbConn.connection.createStatement();
-            String getOnlineUsersQuery = "select user_id from users where status= 1 ";
-            ResultSet rs = stmt.executeQuery(getOnlineUsersQuery);
-            while (rs.next()) {
-                int onlineUsersId = rs.getInt(1);
+            String anouncmentMsgStr ;
+            anouncmentMsgStr = anouncArea.getText();
+            for (ServerSocketHandler.ServerSocketStream client: ServerSocketHandler.clients){
+                client.ps.println(6+"$"+anouncmentMsgStr);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_sendAnouncmentBtnActionPerformed
 
     private void jToggleButton2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jToggleButton2StateChanged
@@ -445,12 +449,9 @@ public class MainPage extends javax.swing.JFrame {
             // try {/ 
             serverStatusLbl.setText("Server Off");
             try {
-                handler.ss.close();
-                
-                handler.suspend();
-                
+                handler.ss.close();                
             } catch (Exception ex) {
-
+                
             }
 
         }
@@ -539,6 +540,10 @@ public class MainPage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -577,14 +582,13 @@ public class MainPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane MainTabbedPane;
     private javax.swing.JMenuBar MenuBar;
-    private javax.swing.JTextField anouncmentMsgTF;
+    private javax.swing.JTextArea anouncArea;
     private javax.swing.JLabel countOffLbl;
     private javax.swing.JLabel countOnLbl;
     private javax.swing.JLabel femaleLbl;
     private javax.swing.JMenu file;
     private javax.swing.JButton getall;
     private javax.swing.JButton getstatus;
-    private javax.swing.JMenu info;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -596,6 +600,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JToggleButton jToggleButton2;

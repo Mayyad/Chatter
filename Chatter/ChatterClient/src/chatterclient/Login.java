@@ -73,6 +73,11 @@ public class Login extends javax.swing.JFrame {
         });
 
         jLabel4.setText("click here to register ");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -154,6 +159,12 @@ public class Login extends javax.swing.JFrame {
         //handler.ps.println("1"+value);
 
     }//GEN-LAST:event_loginBtnActionPerformed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        Registration reg = new Registration();
+        reg.setVisible(true);
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments

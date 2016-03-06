@@ -3,7 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/ayyad/Chatter/Chatter/ChatterClient/src/interfaceobserver/MessageListener.java</file>
             <file>file:/home/ayyad/Chatter/Chatter/ChatterClient/src/chatterclient/controlGroup.java</file>
+            <file>file:/home/ayyad/Chatter/Chatter/ChatterClient/src/socketHandler/ClientSocketHandler.java</file>
+            <file>file:/home/ayyad/Chatter/Chatter/ChatterClient/src/TabPaneHandler/CustomTabePane.java</file>
+            <file>file:/home/ayyad/Chatter/Chatter/ChatterClient/src/chatterclient/MainPage.java</file>
+            <file>file:/home/ayyad/Chatter/Chatter/ChatterClient/src/chatterclient/Login.java</file>
         </group>
     </open-files>
 </project-private>

@@ -35,7 +35,7 @@ public class ServerSocketHandler extends Thread{
 
     serverOperation.ServerOperation operationX;
     ArrayList<String> emails;
-    static ArrayList<ServerSocketStream> clients=new ArrayList<ServerSocketStream>();
+    public static ArrayList<ServerSocketStream> clients=new ArrayList<ServerSocketStream>();
     
     public ServerSocketHandler(int port) {
         try {
@@ -108,11 +108,11 @@ public class ServerSocketHandler extends Thread{
                         String msg=parts[0];
                         String from=parts[1];
                         String to=parts[2];
-                        System.out.println(to);
+                        System.out.println("to"+to);
                         
                         int i;
                         for(i=0;i<emails.size();i++){
-                            System.out.println(emails.get(i));
+                            System.out.println("emails at i"+emails.get(i));
                             if(to.equals(emails.get(i))){
                                 System.out.println("equalZzzZ");
                                 clients.get(i+1).ps.println(str);
@@ -274,7 +274,7 @@ public class ServerSocketHandler extends Thread{
                     //handle the operations here 
                     //login - register - send message - send files
                 } catch (IOException ex) {
-                    
+                    System.out.println("Client out");
                 } catch (SQLException ex) {
                     
                 }

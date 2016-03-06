@@ -62,7 +62,34 @@ public class CustomTabePane {
         XBtn.addActionListener(new MyCloseActionHandler(list.getSelectedValue()));
                 
     }
-    
+    public void addTab(String username){
+        pane.addTab(username, panel);
+        
+        int indexTab=pane.indexOfTab(username);
+        JPanel pnlTab = new JPanel(new GridBagLayout());
+        pnlTab.setOpaque(false);
+        JLabel lblTitle=new JLabel(username);
+        JButton XBtn = new JButton("X");
+        
+        GridBagConstraints grid = new GridBagConstraints();
+        grid.gridx = 0;
+        grid.gridy = 0;
+        grid.weightx = 1;
+        
+        index = indexTab;
+        System.out.println(index);
+        pnlTab.add(lblTitle,grid);
+        
+        grid.gridx++;
+        
+        grid.weightx = 0;
+        pnlTab.add(XBtn,grid);
+        
+        pane.setTabComponentAt(indexTab, pnlTab);
+        
+        XBtn.addActionListener(new MyCloseActionHandler(username));
+                
+    }
      public class MyCloseActionHandler implements ActionListener {
     private String tabName;
     
@@ -79,7 +106,7 @@ public class CustomTabePane {
 
         int index = pane.indexOfTab(getTabName());
         if (index >= 0) {
-
+            
             pane.removeTabAt(index);
         }
     }

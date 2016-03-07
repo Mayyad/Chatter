@@ -164,6 +164,13 @@ public class ClientSocketHandler extends Thread {
                     String[] parts = msg.split("\\$");
                     String msgToAll = parts[1];
                     JOptionPane.showMessageDialog(null, "message From Admin : " +msgToAll);
+                } else if (ch=='9') {
+                    System.out.println(msg);
+//                    msg = msg.replaceFirst("9", "");
+                    Message.setMessage(msg);
+                    Initiator initiater = new Initiator();
+                    initiater.addObserver(mainPageObj);
+                    initiater.sendMessage();
                 }
                 
                 

@@ -115,7 +115,7 @@ public class ServerSocketHandler extends Thread{
                             System.out.println("emails at i"+emails.get(i));
                             if(to.equals(emails.get(i))){
                                 System.out.println("equalZzzZ");
-                                clients.get(i+1).ps.println(str);
+                                clients.get(i).ps.println(str);
                             }
                         }
                         //get(i).ps.println();
@@ -270,7 +270,18 @@ public class ServerSocketHandler extends Thread{
                         
                         //System.out.println(y);
                         
-                    }else {
+                    }else if(ch == '9') {
+                        String[] parts = str.split("\\$");
+                        String groupname = parts[3];
+                        ArrayList<String> userEmails = operationX.getUsersInGroup(groupname);                        
+                        int index;
+                        for (String userEmail : userEmails) {
+                            if ((index = emails.indexOf(userEmail)) != -1) {
+                                clients.get(index).ps.println(str);   
+                            }
+                        }
+                    }
+                    else {
                         System.out.println("nothing");
                     }
 

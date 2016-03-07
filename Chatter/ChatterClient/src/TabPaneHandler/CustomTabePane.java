@@ -23,10 +23,10 @@ import javax.swing.JTabbedPane;
 public class CustomTabePane {
     JTabbedPane pane;
     public int index;
-    JPanel panel;
+    public MainPage.PanelCreation panel;
     JList<String> list;
     
-    public CustomTabePane(JTabbedPane pane,JList<String> list,int index,JPanel panel){
+    public CustomTabePane(JTabbedPane pane,JList<String> list,int index,MainPage.PanelCreation panel){
        this.pane=pane;
        this.list=list;
        this.index=index;

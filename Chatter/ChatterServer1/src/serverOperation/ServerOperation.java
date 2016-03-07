@@ -8,6 +8,7 @@ import DBConnections.DBConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -597,6 +598,27 @@ public class ServerOperation {
         }
         
         return x;
+    }
+    public ArrayList<String> getUsersInGroup(String name) {
+        ArrayList<String> emails = new ArrayList<>();
+        dbConnection = new DBConnections.DBConnection();
+        try {
+            stm = dbConnection.connection.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String query = new String ("SELECT users.email FROM group_list,users,groups "
+                + "WHERE groups.group_id = group_list.group_id and "
+                + "users.user_id = group_list.user_id and groups.group_name ='" +name+"'");
+        try {
+            ResultSet rs = stm.executeQuery(query);
+            while (rs.next()){
+                emails.add(rs.getString("email"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return emails;
     }
     
 }

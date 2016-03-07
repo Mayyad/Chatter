@@ -80,8 +80,8 @@ public class ServerOperation {
         
        dbConnection = new DBConnections.DBConnection();
        
-        String myFrineds = null;
-        String frndlst = null;
+        String myFrineds = "";
+        String frndlst = "";
         try {
             stm = dbConnection.connection.createStatement();
             String query = new String("SELECT * FROM friends WHERE user_id = '"+id+"' ");
@@ -114,8 +114,8 @@ public class ServerOperation {
         
        dbConnection = new DBConnections.DBConnection();
        
-        String myFrineds = null;
-        String frndlst = null;
+        String myFrineds = "";
+        String frndlst = "";
         try {
             stm = dbConnection.connection.createStatement();
             String query = new String("SELECT * FROM friends WHERE user_id = '"+id+"' ");
@@ -236,7 +236,7 @@ public class ServerOperation {
     
     
     
-    public int addFriend(int my_id , int frnd_id)
+    public String addFriend(int my_id , int frnd_id)
     {
          dbConnection = new DBConnections.DBConnection();
         
@@ -245,7 +245,7 @@ public class ServerOperation {
              
              if (checkIsAlreadyHas(my_id , frnd_id)){
                    //System.out.println("Already your friend");
-                    return 0;
+                    return "0";
              }
              else{
                  
@@ -253,7 +253,8 @@ public class ServerOperation {
                      stm = dbConnection.connection.createStatement();
                      String addfrnd = new String ("INSERT INTO friends " + "VALUES ('"+my_id+"' , '"+frnd_id+"')");
                      stm.execute(addfrnd);
-                     return 1;
+                     String frnd_name = returnName(frnd_id);
+                     return frnd_name;
                  } catch (SQLException ex) {
                      Logger.getLogger(ServerOperation.class.getName()).log(Level.SEVERE, null, ex);
                  }
@@ -262,9 +263,9 @@ public class ServerOperation {
          }
          else
          {
-            return 3;// System.out.println("Not found");
+            return "3";// System.out.println("Not found");
          }
-         return 3;
+         return "3";
     }
 
 

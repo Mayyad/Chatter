@@ -171,7 +171,7 @@ public class ServerSocketHandler extends Thread{
                             String friendsEmail = operationX.friendsEmail(myid);
                             if (contactList == null ){
                                 contactList = " ";
-                                friendsEmail = "";
+                                friendsEmail = " ";
                             }
                             String groupList = operationX.groupList(myid);
                             if ( groupList == null )
@@ -213,21 +213,24 @@ public class ServerSocketHandler extends Thread{
                        }
                        else {
                               int frnd_id = operationX.returnId(friendMail);
-                              if (operationX.addFriend(global_id, frnd_id) == 1)
-                           {
-                               System.out.println("done"); // done hyb3t rakam 2
-                               ps.println("2");
-                           }
-                           else if (operationX.addFriend(global_id, frnd_id) == 0) {
+                              String frnd_name ="";
+                          
+                          if ((frnd_name = operationX.addFriend(global_id, frnd_id)).equals("0")) {
                                System.out.println("Already your friend"); // ab3t lel client en el frnd dh 3ndy asln 
                                ps.println("3");
                            }
-                           else if (operationX.addFriend(global_id, frnd_id) == 3)
+                           else if (operationX.addFriend(global_id, frnd_id).equals("3"))
                            {
                                System.out.println("msh mwgood fel db"); //ab3t lel client en mafesh mail fe db esmo kda
                                ps.println("4");
                            }
+                            else
+                           {
+                               System.out.println("done"); // done hyb3t rakam 2
+                               ps.println("2$"+frnd_name);
+                           }
                        }
+                       
                     }else if (ch == '5')   
                     {
                         

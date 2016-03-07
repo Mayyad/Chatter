@@ -58,9 +58,9 @@ public class MainPage extends javax.swing.JFrame implements interfaceobserver.Me
     /**
      * Creates new form MainPage
      */
-    public MainPage() {
+    public MainPage(ClientSocketHandler handler) {
         initComponents();
-        handler = new ClientSocketHandler();
+        this.handler = handler;
         emails = new ArrayList<String>();
         usrNameLbl.setText(getUserNamelbl());
 
@@ -488,7 +488,7 @@ public class MainPage extends javax.swing.JFrame implements interfaceobserver.Me
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainPage().setVisible(true);
+                //new MainPage().setVisible(true);
             }
         });
     }
@@ -667,4 +667,6 @@ class PanelCreation extends JPanel {
 */
     }
 
+
+    
 }

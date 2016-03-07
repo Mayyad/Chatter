@@ -34,12 +34,11 @@ public class ClientSocketHandler extends Thread {
     MainPage mainPageObj;
     String msg;
     public ClientSocketHandler() {
-
         try {
             socket = new Socket("localhost", 12345);
             dis = new DataInputStream(socket.getInputStream());
             ps = new PrintStream(socket.getOutputStream());
-           
+            mainPageObj = new MainPage(this);
         } catch (IOException ex) {
             System.err.println("error");
         }
@@ -56,23 +55,34 @@ public class ClientSocketHandler extends Thread {
                 System.out.println("el char aheh\t"+ch);
                 if(ch=='1'){
                      //user exists
-                    
-                    mainPageObj = new MainPage();
-                    
-                     
                      String[] parts = msg.split("\\$");
                         
                         String id         = parts[0];
                         String loggedName = parts[1];
                         String contactList= parts[2];
                         String groupList  = parts[3];
-                        String friendsEmail  = parts[4];
+                        String friendsEmail = "";
+                        if (parts.length > 4) {
+                         friendsEmail = parts[4];
+                        }
+                        
+                        
+                        if (friendsEmail.equals(""))
+                        {
+                            friendsEmail="";
+                            mainPageObj.emails.add("");
+                        }else {
+                            String[] singleEmailContactList = friendsEmail.split("\\*");
+                             int z = singleEmailContactList.length;
+                             for ( int i =0 ;  i < z ;  i ++){
+                                mainPageObj.emails.add(singleEmailContactList[i]);
+                            }
+                        }
                         
                         if (contactList.equals(""))
                         {
                             contactList = " ";
                             mainPageObj.setFriendListModel("");
-                            friendsEmail = " ";
                         }
                         else {
                             String[] singleContactList = contactList.split("\\*");
@@ -81,13 +91,9 @@ public class ClientSocketHandler extends Thread {
                         
                                 System.out.println(singleContactList[i]);
                                 mainPageObj.setFriendListModel(singleContactList[i]);
-                            }
+                             }
              
-                             String[] singleEmailContactList = friendsEmail.split("\\*");
-                             int z = singleEmailContactList.length;
-                             for ( int i =0 ;  i < z ;  i ++){
-                                mainPageObj.emails.add(singleEmailContactList[i]);
-                            }
+                             
                         }
                         
                         
@@ -138,8 +144,9 @@ public class ClientSocketHandler extends Thread {
                 }else if(ch=='2'){
                    
                     System.out.println("add friend done");
-                    
-                    
+                    String[] parts = msg.split("\\$");
+                    String frnd_name = parts[1];
+                    mainPageObj.setFriendListModel(frnd_name);
                 }else if(ch == '3'){ 
                    
                     System.out.println("friend already 3andk aslan "); 
@@ -165,7 +172,7 @@ public class ClientSocketHandler extends Thread {
                     JOptionPane.showMessageDialog(new Registration(), "Email here please enter another email !!");
                 } else {
                     //new message recieved 
-                    mainPageObj = new MainPage();
+//                    mainPageObj = new MainPage();
                     System.out.println(msg);
                     
                     String[] parts = msg.split("\\$");
@@ -186,8 +193,8 @@ public class ClientSocketHandler extends Thread {
             } catch (IOException ex) {
                 
                 System.out.println("error hereee");
-                MainPage mainPg=new MainPage();
-                JOptionPane.showMessageDialog(mainPg,
+//                MainPage mainPg=new MainPage();
+                JOptionPane.showMessageDialog(mainPageObj,
 					"Server down....",
 					"Server  error",
 					JOptionPane.ERROR_MESSAGE);

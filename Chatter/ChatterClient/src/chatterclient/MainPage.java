@@ -415,6 +415,8 @@ public class MainPage extends javax.swing.JFrame implements interfaceobserver.Me
             }
             System.out.println("f >>" + f);
             if (f == true) {
+                tabFriendList.panel.index = this.friendList.getSelectedIndex()-1;
+                tabFriendList.panel.type = "private";
                 tabFriendList.addTab();
                 tabs.put(this.friendList.getSelectedIndex()-1, tabFriendList);
                 System.out.println("f=false");
@@ -628,12 +630,6 @@ public class PanelCreation extends JPanel {
             } catch (Exception e) {
                 System.out.println("error...");
             }
-             try {
-             System.out.println(emails.get(tabFriendList.index - 1));
-             System.out.println(tabFriendList.index);
-             }catch(Exception e){
-                 System.out.println("msh ");
-             }
         }
     }
 
@@ -677,8 +673,8 @@ public class PanelCreation extends JPanel {
 //        friendList.get
         System.out.println("tab opening");
         if (tabs.containsKey(Integer.parseInt(index))) {
-            ((PanelCreation)((CustomTabePane)tabs.get(index)).panel).chatMsgs.append(from+": "+ msg1+'\n');
-        }else {
+            ((PanelCreation)((CustomTabePane)tabs.get(Integer.parseInt(index))).panel).chatMsgs.append(from+": "+ msg1+'\n');
+        } else {
             panel.chatMsgs.append(from+": "+ msg1+'\n');
             panel.index = Integer.parseInt(index);
             panel.type = to;
@@ -686,11 +682,11 @@ public class PanelCreation extends JPanel {
             cjp.addTab(to);
             tabs.put(Integer.parseInt(index), cjp);
         }    
-        }else {
+        } else {
         
-        String msg1 = parts[0];
-        String from = parts[1];
-        String to= parts[2];
+        String msg1 = parts[1];
+        String from = parts[2];
+        String to= parts[3];
         
         
 //        friendList.get
@@ -700,6 +696,7 @@ public class PanelCreation extends JPanel {
         }else {
             panel.chatMsgs.append(from+": "+ msg1+'\n');
             panel.index = emails.indexOf(from);
+            panel.type = "private";
             CustomTabePane cjp = new CustomTabePane(mainTabPane,friendList,emails.indexOf(from),panel);
             cjp.addTab(from);
             tabs.put(emails.indexOf(from), cjp);

@@ -105,9 +105,9 @@ public class ServerSocketHandler extends Thread{
                         System.out.println("message");
                         str = str.replaceFirst("2", "");
                         String[] parts = str.split("\\$");
-                        String msg=parts[0];
-                        String from=parts[1];
-                        String to=parts[2];
+                        String msg=parts[1];
+                        String from=parts[2];
+                        String to=parts[3];
                         System.out.println("to"+to);
                         
                         int i;
@@ -272,8 +272,11 @@ public class ServerSocketHandler extends Thread{
                         
                     }else if(ch == '9') {
                         String[] parts = str.split("\\$");
+                        System.out.println("parts is : "+ str);
                         String groupname = parts[3];
-                        ArrayList<String> userEmails = operationX.getUsersInGroup(groupname);                        
+                        String from = parts[2];
+                        ArrayList<String> userEmails = operationX.getUsersInGroup(groupname);  
+                        userEmails.remove(from);
                         int index;
                         for (String userEmail : userEmails) {
                             if ((index = emails.indexOf(userEmail)) != -1) {

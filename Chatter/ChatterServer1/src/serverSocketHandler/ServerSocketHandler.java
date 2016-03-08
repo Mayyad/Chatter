@@ -228,6 +228,7 @@ public class ServerSocketHandler extends Thread{
                            {
                                System.out.println("done"); // done hyb3t rakam 2
                                ps.println("2$"+frnd_name);
+                               emails.add(frnd_name);
                            }
                        }
                        

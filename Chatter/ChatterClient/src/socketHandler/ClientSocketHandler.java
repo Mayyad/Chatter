@@ -58,9 +58,16 @@ public class ClientSocketHandler extends Thread {
                      String[] parts = msg.split("\\$");
                         
                         String id         = parts[0];
+                        String contactList = "";
                         String loggedName = parts[1];
-                        String contactList= parts[2];
-                        String groupList  = parts[3];
+                        if (parts.length > 2){
+                            contactList= parts[2];
+                        }
+                        String groupList ="";
+                        if (parts.length > 2){
+                             groupList  = parts[3];;
+                        }
+                       
                         String friendsEmail = "";
                         if (parts.length > 4) {
                          friendsEmail = parts[4];
@@ -147,6 +154,7 @@ public class ClientSocketHandler extends Thread {
                     String[] parts = msg.split("\\$");
                     String frnd_name = parts[1];
                     mainPageObj.setFriendListModel(frnd_name);
+                    mainPageObj.emails.add(frnd_name);
                 }else if(ch == '3'){ 
                    
                     System.out.println("friend already 3andk aslan "); 

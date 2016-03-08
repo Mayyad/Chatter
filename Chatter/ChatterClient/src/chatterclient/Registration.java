@@ -50,7 +50,7 @@ public class Registration extends javax.swing.JFrame {
         maleRBtn = new javax.swing.JRadioButton();
         femaleRBtn = new javax.swing.JRadioButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel3.setBackground(new java.awt.Color(249, 171, 220));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Registration"));
@@ -200,6 +200,9 @@ public class Registration extends javax.swing.JFrame {
                                 String value = "'" + userName + "'" + ",'" + userPass + "'" + ",'" + email + "'," + "'" + gender + "','" + age + "'";
                                 try {
                                     handler.ps.println("1" + value);
+                                    JOptionPane.showMessageDialog(null, "Registration done succsefuly ");
+                                    this.dispose();
+                                    new Login().setVisible(true);
                                 } catch (Exception e) {
                                     showMessage("something went wrong .. try again later");
                                 }

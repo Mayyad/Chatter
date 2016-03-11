@@ -136,6 +136,7 @@ public class controlGroup extends javax.swing.JFrame {
         String groupName = grpname.getText();
         System.out.println(frndsString);
         handler.ps.println("5"+"$"+groupName+"$"+frndsString);
+        this.dispose();
 //       
     }//GEN-LAST:event_createbtnActionPerformed
 

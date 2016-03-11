@@ -24,15 +24,14 @@ public class MainPage extends javax.swing.JFrame {
     ServerSocketHandler handler;
     serverOperation.ServerOperation operationObj;
     DBConnections.DBConnection dbConn;
-    
-    DefaultListModel<String> onlineListModel ;
-    DefaultListModel<String> offlineListModel;
-    
 
-    
+    DefaultListModel<String> onlineListModel;
+    DefaultListModel<String> offlineListModel;
+
     public String anouncmentMsgStr;
 
     String modelItemString;
+
     /**
      * Creates new form MainPage
      */
@@ -42,20 +41,19 @@ public class MainPage extends javax.swing.JFrame {
         onlineListModel = new DefaultListModel<>();
         onlineList.setModel(onlineListModel);
         onlineListModel.addElement(modelItemString);
-        
-        offlineListModel=new DefaultListModel<>();
+
+        offlineListModel = new DefaultListModel<>();
         offlineList.setModel(offlineListModel);
         offlineListModel.addElement(modelItemString);
 
     }
 
     /* offline set and get  */
-    
     public void setOnlineListModel(String onlineListX) {
-     //   this.onlineListModel = onlineListModel;
-    
-     onlineListModel.addElement(onlineListX);
-    //onlineListModel.set(onlineListX);
+        //   this.onlineListModel = onlineListModel;
+
+        onlineListModel.addElement(onlineListX);
+        //onlineListModel.set(onlineListX);
     }
 
     public DefaultListModel<String> getOnlineListModel() {
@@ -63,21 +61,15 @@ public class MainPage extends javax.swing.JFrame {
     }
 
     /* offline set and get */
-    
     public void setOfflineListModel(String offlineListX) {
         //this.offlineListModel = offlineListModel;
         offlineListModel.addElement(offlineListX);
     }
 
-    
     public DefaultListModel<String> getOfflineListModel() {
         return offlineListModel;
     }
 
-    
-    
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -383,7 +375,7 @@ public class MainPage extends javax.swing.JFrame {
 
         MainTabbedPane.addTab("Send Announcment", jPanel1);
 
-        file.setText("File");
+        file.setText("options");
 
         jMenuItem1.setMnemonic('E');
         jMenuItem1.setText("Exit");
@@ -417,19 +409,18 @@ public class MainPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MainTabbedPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MainTabbedPaneMouseClicked
-       
 
 
     }//GEN-LAST:event_MainTabbedPaneMouseClicked
 
     private void sendAnouncmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendAnouncmentBtnActionPerformed
-        
-            // TODO add your handling code here:
-            String anouncmentMsgStr ;
-            anouncmentMsgStr = anouncArea.getText();
-            for (ServerSocketHandler.ServerSocketStream client: ServerSocketHandler.clients){
-                client.ps.println(6+"$"+anouncmentMsgStr);
-            }
+
+        // TODO add your handling code here:
+        String anouncmentMsgStr;
+        anouncmentMsgStr = anouncArea.getText();
+        for (ServerSocketHandler.ServerSocketStream client : ServerSocketHandler.clients) {
+            client.ps.println(6 + "$" + anouncmentMsgStr);
+        }
     }//GEN-LAST:event_sendAnouncmentBtnActionPerformed
 
     private void jToggleButton2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jToggleButton2StateChanged
@@ -438,20 +429,22 @@ public class MainPage extends javax.swing.JFrame {
 
     private void jToggleButton2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jToggleButton2ItemStateChanged
         int statue = evt.getStateChange();
-           
-        if (statue == 1) {            
-     
+
+        if (statue == 1) {
+
             serverStatusLbl.setText("Server On");
             handler = new ServerSocketHandler(12345);
-           
-        }
-        else {
-            // try {/ 
+
+        } else {
+            
             serverStatusLbl.setText("Server Off");
             try {
-                handler.ss.close();                
-            } catch (Exception ex) {
                 
+                handler.ss.close();
+                handler.stop();
+                
+            } catch (Exception ex) {
+
             }
 
         }
@@ -460,80 +453,68 @@ public class MainPage extends javax.swing.JFrame {
     private void getstatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getstatusActionPerformed
         // TODO add your handling code here:
 //         
-       
-       String onLineString  = new ServerOperation().getOnlineUsers();
-       String offLineString = new ServerOperation().getOfflineUsers();
-       
-      
-       onlineListModel.removeAllElements();
-       offlineListModel.removeAllElements();
-       
-       
-      
-       String[] onlineArray = onLineString.split("\\*");
-       String[] offlineArray= offLineString.split("\\*");
-               
-       int onlineLength = onlineArray.length;
-       int offlineLength= offlineArray.length;
-       
-       
-       for(int i=0 ; i<onlineLength ; i++){
-           System.out.println(onlineArray[i]);
-           setOnlineListModel(onlineArray[i]);
-        } 
 
-       for(int y=0 ; y<offlineLength ; y++){
-           System.out.println(offlineArray[y]);
-           setOfflineListModel(offlineArray[y]);
-        } 
-       
-       StringBuilder on = new StringBuilder();
-       on.append(onlineLength);
-       String onn = on.toString();
-       StringBuilder off = new StringBuilder();
-       off.append(offlineLength);
-       String offf = off.toString();
-       
-       onlineUsrCountLbl.setText(onn);
-       offlineUsrCountLbl.setText(offf);
-       
-       //System.out.println(onlineLength);
-       
-       
+        String onLineString = new ServerOperation().getOnlineUsers();
+        String offLineString = new ServerOperation().getOfflineUsers();
 
-    
+        onlineListModel.removeAllElements();
+        offlineListModel.removeAllElements();
+
+        String[] onlineArray = onLineString.split("\\*");
+        String[] offlineArray = offLineString.split("\\*");
+
+        int onlineLength = onlineArray.length-1;
+        int offlineLength = offlineArray.length-1;
+
+        for (int i = 0; i < onlineLength; i++) {
+            System.out.println(onlineArray[i]);
+            setOnlineListModel(onlineArray[i]);
+        }
+
+        for (int y = 0; y < offlineLength; y++) {
+            System.out.println(offlineArray[y]);
+            setOfflineListModel(offlineArray[y]);
+        }
+
+        StringBuilder on = new StringBuilder();
+        on.append(onlineLength);
+        String onn = on.toString();
+        StringBuilder off = new StringBuilder();
+        off.append(offlineLength);
+        String offf = off.toString();
+
+        onlineUsrCountLbl.setText(onn);
+        offlineUsrCountLbl.setText(offf);
+
+        //System.out.println(onlineLength);
+
     }//GEN-LAST:event_getstatusActionPerformed
 
     private void getallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getallActionPerformed
         // TODO add your handling code here:
-        
-         int male  = new ServerOperation().genderMaleStat();
-         int female = new ServerOperation().genderFemaleStat();
-         int online = new ServerOperation().getOnline();
-         
-          StringBuilder maleInteger = new StringBuilder();
-          maleInteger.append(male);
-          String malee = maleInteger.toString();
-         
-          
-          StringBuilder femaleInteger = new StringBuilder();
-          femaleInteger.append(female);
-          String femalee = femaleInteger.toString();
-          
-          
-           StringBuilder onlineInteger = new StringBuilder();
-          onlineInteger.append(online);
-          String onlinee = onlineInteger.toString();
-          
-          
-          maleLbl.setText(malee);
-          femaleLbl.setText(femalee);
-          
-          onLbl.setText(onlinee);
-         
-          
-         
-        
+
+        int male = new ServerOperation().genderMaleStat();
+        int female = new ServerOperation().genderFemaleStat();
+        int online = new ServerOperation().getOnline();
+
+        StringBuilder maleInteger = new StringBuilder();
+        maleInteger.append(male);
+        String malee = maleInteger.toString();
+
+        StringBuilder femaleInteger = new StringBuilder();
+        femaleInteger.append(female);
+        String femalee = femaleInteger.toString();
+
+        StringBuilder onlineInteger = new StringBuilder();
+        onlineInteger.append(online);
+        String onlinee = onlineInteger.toString();
+
+        maleLbl.setText(malee);
+        femaleLbl.setText(femalee);
+
+        onLbl.setText(onlinee);
+
+
     }//GEN-LAST:event_getallActionPerformed
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed

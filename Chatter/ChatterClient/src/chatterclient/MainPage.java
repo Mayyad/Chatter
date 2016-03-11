@@ -121,7 +121,7 @@ public class MainPage extends javax.swing.JFrame implements interfaceobserver.Me
         groupList = new javax.swing.JList<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        signOutMenuItem = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -130,6 +130,11 @@ public class MainPage extends javax.swing.JFrame implements interfaceobserver.Me
         jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         MainPanel.setLayout(new java.awt.BorderLayout(3, 3));
 
@@ -268,11 +273,16 @@ public class MainPage extends javax.swing.JFrame implements interfaceobserver.Me
 
         MainPanel.add(jPanel4, java.awt.BorderLayout.PAGE_START);
 
-        jMenu1.setText("Control");
+        jMenu1.setText("options");
 
-        jMenuItem1.setMnemonic('O');
-        jMenuItem1.setText("Sign-out");
-        jMenu1.add(jMenuItem1);
+        signOutMenuItem.setMnemonic('O');
+        signOutMenuItem.setText("Sign-out");
+        signOutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signOutMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(signOutMenuItem);
 
         jMenuItem2.setText("Exit");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -392,19 +402,19 @@ public class MainPage extends javax.swing.JFrame implements interfaceobserver.Me
 
     private void friendListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendListMouseClicked
         PanelCreation panel = new PanelCreation();
-                    panel.index = friendList.getSelectedIndex() - 1;
-                    panel.type = "private";
-        tabFriendList = new CustomTabePane(mainTabPane, friendList, this.friendList.getSelectedIndex()-1, panel);
+        panel.index = friendList.getSelectedIndex() - 1;
+        panel.type = "private";
+        tabFriendList = new CustomTabePane(mainTabPane, friendList, this.friendList.getSelectedIndex() - 1, panel);
 
         if (tabs.isEmpty()) {
             tabFriendList.addTab();
-            tabs.put(this.friendList.getSelectedIndex()-1, tabFriendList);
+            tabs.put(this.friendList.getSelectedIndex() - 1, tabFriendList);
         } else {
             for (Entry<Integer, CustomTabePane> entry : tabs.entrySet()) {
                 System.out.println("sss");
                 System.out.println("key" + entry.getKey());
                 System.out.println("item index" + this.friendList.getSelectedIndex());
-                if (entry.getKey() == this.friendList.getSelectedIndex()-1) {
+                if (entry.getKey() == this.friendList.getSelectedIndex() - 1) {
                     f = false;
                     System.out.println(f);
                     break;
@@ -415,10 +425,10 @@ public class MainPage extends javax.swing.JFrame implements interfaceobserver.Me
             }
             System.out.println("f >>" + f);
             if (f == true) {
-                tabFriendList.panel.index = this.friendList.getSelectedIndex()-1;
+                tabFriendList.panel.index = this.friendList.getSelectedIndex() - 1;
                 tabFriendList.panel.type = "private";
                 tabFriendList.addTab();
-                tabs.put(this.friendList.getSelectedIndex()-1, tabFriendList);
+                tabs.put(this.friendList.getSelectedIndex() - 1, tabFriendList);
                 System.out.println("f=false");
             }
         }
@@ -427,20 +437,20 @@ public class MainPage extends javax.swing.JFrame implements interfaceobserver.Me
 
     private void groupListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_groupListMouseClicked
         PanelCreation panel = new PanelCreation();
-                    panel.index = groupList.getSelectedIndex() + 50;
-                    
-                    panel.type = groupList.getSelectedValue();
+        panel.index = groupList.getSelectedIndex() + 50;
+
+        panel.type = groupList.getSelectedValue();
         tabGroupList = new CustomTabePane(mainTabPane, groupList, (this.groupList.getSelectedIndex() + 50), panel);
 
         if (tabs.isEmpty()) {
             tabGroupList.addTab();
-            tabs.put(this.groupList.getSelectedIndex()+50, tabGroupList);
+            tabs.put(this.groupList.getSelectedIndex() + 50, tabGroupList);
         } else {
             for (Entry<Integer, CustomTabePane> entry : tabs.entrySet()) {
                 System.out.println("sss");
                 System.out.println("key" + entry.getKey());
-                System.out.println("item index" +( this.groupList.getSelectedIndex()+50));
-                if (entry.getKey() == (this.groupList.getSelectedIndex()+50)) {
+                System.out.println("item index" + (this.groupList.getSelectedIndex() + 50));
+                if (entry.getKey() == (this.groupList.getSelectedIndex() + 50)) {
                     f = false;
                     System.out.println(f);
                     break;
@@ -452,13 +462,14 @@ public class MainPage extends javax.swing.JFrame implements interfaceobserver.Me
             System.out.println("f >>" + f);
             if (f == true) {
                 tabGroupList.addTab();
-                tabs.put((this.groupList.getSelectedIndex()+50), tabGroupList);
+                tabs.put((this.groupList.getSelectedIndex() + 50), tabGroupList);
                 System.out.println("f=false");
             }
         }
     }//GEN-LAST:event_groupListMouseClicked
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        handler.ps.println("c");
         System.exit(0);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -477,6 +488,17 @@ public class MainPage extends javax.swing.JFrame implements interfaceobserver.Me
             Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void signOutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signOutMenuItemActionPerformed
+        // TODO add your handling code here:
+        handler.ps.println("7");
+    }//GEN-LAST:event_signOutMenuItemActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        handler.ps.println("c");
+        System.exit(0);
+    }//GEN-LAST:event_formWindowClosing
 
     public void setUserNamelbl(String name) {
         //userName=name;
@@ -538,7 +560,6 @@ public class MainPage extends javax.swing.JFrame implements interfaceobserver.Me
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -549,9 +570,11 @@ public class MainPage extends javax.swing.JFrame implements interfaceobserver.Me
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane mainTabPane;
+    private javax.swing.JMenuItem signOutMenuItem;
     private javax.swing.JLabel usrNameLbl;
     // End of variables declaration//GEN-END:variables
-public class PanelCreation extends JPanel {
+
+    public class PanelCreation extends JPanel {
 
         private javax.swing.JButton sendMsgBtn;
         private javax.swing.JButton sendFileBtn;
@@ -559,9 +582,10 @@ public class PanelCreation extends JPanel {
         javax.swing.JTextArea chatMsgs;
         private javax.swing.JScrollPane jScrollPane5;
         private javax.swing.JScrollPane jScrollPane4;
-        JPanel panelbtn,msgPanel,msgsPanel;
+        JPanel panelbtn, msgPanel, msgsPanel;
         public int index;
         public String type;
+
         public PanelCreation() {
 
             chatMsgs = new javax.swing.JTextArea();
@@ -570,23 +594,23 @@ public class PanelCreation extends JPanel {
             jScrollPane5 = new javax.swing.JScrollPane(msgTA);
             jScrollPane4 = new javax.swing.JScrollPane(chatMsgs);
             sendFileBtn = new javax.swing.JButton();
-            panelbtn=new JPanel();
-            msgPanel=new JPanel(new GridLayout(1,2));
-            msgsPanel=new JPanel();
-            
+            panelbtn = new JPanel();
+            msgPanel = new JPanel(new GridLayout(1, 2));
+            msgsPanel = new JPanel();
+
             msgTA.setColumns(18);
-            msgTA.setRows(3);
-            
+            msgTA.setRows(10);
+
             chatMsgs.setEditable(false);
             chatMsgs.setColumns(39);
-            chatMsgs.setRows(5);
-           
-            this.setLayout(new GridLayout(3,3));
-            this.add(msgsPanel);           
+            chatMsgs.setRows(7);
+
+            this.setLayout(new GridLayout(3, 3));
+            this.add(msgsPanel);
             this.add(msgPanel);
             this.add(panelbtn);
             msgTA.setAlignmentX(CENTER_ALIGNMENT);
-            
+
             msgsPanel.add(jScrollPane4);
             msgPanel.add(jScrollPane5);
             msgPanel.add(panelbtn);
@@ -597,13 +621,12 @@ public class PanelCreation extends JPanel {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendMsgBtnActionPerformed(evt);
                 }
-            });       
+            });
         }
 
         public void addPanel() {
 
         }
-        
 
         private void sendMsgBtnActionPerformed(java.awt.event.ActionEvent evt) {
 
@@ -618,14 +641,14 @@ public class PanelCreation extends JPanel {
                 to = type;
             }
 
-            chatMsgs.append(from+": "+msg+'\n');
+            chatMsgs.append(from + ": " + msg + '\n');
 
             try {
                 if (type.equals("private")) {
-                    handler.ps.println("2" +"$"+ msg + "$" + from + "$" + to);
+                    handler.ps.println("2" + "$" + msg + "$" + from + "$" + to);
 
-                }else {
-                    handler.ps.println("9" +"$"+ msg + "$" + from + "$" + to+"$"+index);
+                } else {
+                    handler.ps.println("9" + "$" + msg + "$" + from + "$" + to + "$" + index);
                 }
             } catch (Exception e) {
                 System.out.println("error...");
@@ -633,8 +656,8 @@ public class PanelCreation extends JPanel {
         }
     }
 
-     String msg2;
-     
+    String msg2;
+
 //     private int valueToIndex(JList list, String value) {
 // 	
 //         int size = list.getModel().getSize();
@@ -654,93 +677,53 @@ public class PanelCreation extends JPanel {
 //         return -1;
 //   	
 //     }
-     
     @Override
     public void receiveMessage() {
 //        System.out.println("law el tab maffto7aa append --- else eft7 el tab bta3 ely b3t el msg");
 //        System.out.println("end");
-        PanelCreation panel = new PanelCreation();        
-        String m=Message.getMessage();
+        PanelCreation panel = new PanelCreation();
+        String m = Message.getMessage();
         System.out.println(" message : " + m);
         String[] parts = m.split("\\$");
         if (parts.length > 4) {
-        String msg1 = parts[1];
-        String from = parts[2];
-        String to= parts[3];
-                String index= parts[4];
+            String msg1 = parts[1];
+            String from = parts[2];
+            String to = parts[3];
+            String index = parts[4];
 
-        
 //        friendList.get
-        System.out.println("tab opening");
-        if (tabs.containsKey(Integer.parseInt(index))) {
-            ((PanelCreation)((CustomTabePane)tabs.get(Integer.parseInt(index))).panel).chatMsgs.append(from+": "+ msg1+'\n');
+            System.out.println("tab opening");
+            if (tabs.containsKey(Integer.parseInt(index))) {
+                ((PanelCreation) ((CustomTabePane) tabs.get(Integer.parseInt(index))).panel).chatMsgs.append(from + ": " + msg1 + '\n');
+            } else {
+                panel.chatMsgs.append(from + ": " + msg1 + '\n');
+                panel.index = Integer.parseInt(index);
+                panel.type = to;
+                CustomTabePane cjp = new CustomTabePane(mainTabPane, friendList, Integer.parseInt(index), panel);
+                cjp.addTab(to);
+                tabs.put(Integer.parseInt(index), cjp);
+            }
         } else {
-            panel.chatMsgs.append(from+": "+ msg1+'\n');
-            panel.index = Integer.parseInt(index);
-            panel.type = to;
-            CustomTabePane cjp = new CustomTabePane(mainTabPane,friendList,Integer.parseInt(index),panel);
-            cjp.addTab(to);
-            tabs.put(Integer.parseInt(index), cjp);
-        }    
-        } else {
-        
-        String msg1 = parts[1];
-        String from = parts[2];
-        String to= parts[3];
-        
-        
-//        friendList.get
-        System.out.println("tab opening");
-        if (tabs.containsKey(emails.indexOf(from))) {
-            ((PanelCreation)((CustomTabePane)tabs.get(emails.indexOf(from))).panel).chatMsgs.append(from+": "+ msg1+'\n');
-        }else {
-            panel.chatMsgs.append(from+": "+ msg1+'\n');
-            panel.index = emails.indexOf(from);
-            panel.type = "private";
-            CustomTabePane cjp = new CustomTabePane(mainTabPane,friendList,emails.indexOf(from),panel);
-            cjp.addTab(from);
-            tabs.put(emails.indexOf(from), cjp);
-        }
-        
-        }
-        
-//        JOptionPane.showMessageDialog(mainTabPane,from+":"+msg1,"New Message Received",JOptionPane.PLAIN_MESSAGE);
 
-//        CustomTabePane tabFriendList = new CustomTabePane(mainTabPane, friendList,2, panel);
-//        System.out.println(index);
-//        this.tabFriendList.addTab("mm");
-//        System.out.println("endTab");
-        
-        /*
-        if (tabs.isEmpty()) {
-            tabFriendList.addTab();
-            tabs.put(this.friendList.getSelectedIndex(), tabFriendList);
-        } else {
-            for (Entry<Integer, CustomTabePane> entry : tabs.entrySet()) {
-                System.out.println("sss");
-                System.out.println("key" + entry.getKey());
-                System.out.println("item index" + this.friendList.getSelectedIndex());
-                if (entry.getKey() == this.friendList.getSelectedIndex()) {
-                    f = false;
-                    System.out.println(f);
-                    break;
-                } else {
-                    f = true;
-                    System.out.println(f);
-                }
+            String msg1 = parts[1];
+            String from = parts[2];
+            String to = parts[3];
+
+//        friendList.get
+            System.out.println("tab opening");
+            if (tabs.containsKey(emails.indexOf(from))) {
+                ((PanelCreation) ((CustomTabePane) tabs.get(emails.indexOf(from))).panel).chatMsgs.append(from + ": " + msg1 + '\n');
+            } else {
+                panel.chatMsgs.append(from + ": " + msg1 + '\n');
+                panel.index = emails.indexOf(from);
+                panel.type = "private";
+                CustomTabePane cjp = new CustomTabePane(mainTabPane, friendList, emails.indexOf(from), panel);
+                cjp.addTab(from);
+                tabs.put(emails.indexOf(from), cjp);
             }
-            System.out.println("f >>" + f);
-            if (f == true) {
-                tabFriendList.addTab();
-                tabs.put(this.friendList.getSelectedIndex(), tabFriendList);
-                System.out.println("f=false");
-            }
+
         }
-        System.out.println("end");
-        //
-*/
+
     }
 
-
-    
 }

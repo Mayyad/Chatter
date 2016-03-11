@@ -11,7 +11,6 @@ import socketHandler.ClientSocketHandler;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author ahmedsobhy
@@ -20,7 +19,7 @@ public class Login extends javax.swing.JFrame {
 
     ClientSocketHandler handler;
     User u1;
-    
+
     public Login() {
         initComponents();
         handler = new ClientSocketHandler();
@@ -151,8 +150,8 @@ public class Login extends javax.swing.JFrame {
 
         String email = emailTF.getText();
         String password = passwordTF.getText();
-        
-        u1=User.getInstance();
+
+        u1 = User.getInstance();
         u1.setEmail(email);
         handler.ps.println("3" + "$" + email + "$" + password);
         this.dispose();// ($) the dollar sign is just a delimeter it doesnt mean anything 

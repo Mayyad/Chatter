@@ -10,17 +10,18 @@ package JavaBeans;
  * @author ayyad
  */
 public class Message {
+
     private static String message;
-    
-    public Message(){
-        
+
+    public Message() {
+
     }
-    
-    public static void setMessage(String msg){
-        message=msg;
+
+    public static void setMessage(String msg) {
+        message = msg;
     }
-    
-    public static String getMessage(){
+
+    public static String getMessage() {
         return message;
     }
 }

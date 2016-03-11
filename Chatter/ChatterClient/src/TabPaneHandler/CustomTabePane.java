@@ -21,94 +21,97 @@ import javax.swing.JTabbedPane;
  * @author a-sobhy
  */
 public class CustomTabePane {
+
     JTabbedPane pane;
     public int index;
     public MainPage.PanelCreation panel;
     JList<String> list;
-    
-    public CustomTabePane(JTabbedPane pane,JList<String> list,int index,MainPage.PanelCreation panel){
-       this.pane=pane;
-       this.list=list;
-       this.index=index;
-       this.panel=panel;
+
+    public CustomTabePane(JTabbedPane pane, JList<String> list, int index, MainPage.PanelCreation panel) {
+        this.pane = pane;
+        this.list = list;
+        this.index = index;
+        this.panel = panel;
     }
-    
-    
-    public void addTab(){
-         pane.addTab(list.getSelectedValue(), panel);
-        
-        int indexTab=pane.indexOfTab(list.getSelectedValue());
+
+    public void addTab() {
+        pane.addTab(list.getSelectedValue(), panel);
+
+        int indexTab = pane.indexOfTab(list.getSelectedValue());
         JPanel pnlTab = new JPanel(new GridBagLayout());
         pnlTab.setOpaque(false);
-        JLabel lblTitle=new JLabel(list.getSelectedValue());
+        JLabel lblTitle = new JLabel(list.getSelectedValue());
         JButton XBtn = new JButton("X");
-        
+
         GridBagConstraints grid = new GridBagConstraints();
         grid.gridx = 0;
         grid.gridy = 0;
         grid.weightx = 1;
-        
+
         index = list.getSelectedIndex();
         System.out.println(index);
-        pnlTab.add(lblTitle,grid);
-        
+        pnlTab.add(lblTitle, grid);
+
         grid.gridx++;
-        
+
         grid.weightx = 0;
-        pnlTab.add(XBtn,grid);
-        
+        pnlTab.add(XBtn, grid);
+
         pane.setTabComponentAt(indexTab, pnlTab);
-        
+
         XBtn.addActionListener(new MyCloseActionHandler(list.getSelectedValue()));
-                
+
     }
-    public void addTab(String username){
+
+    public void addTab(String username) {
         pane.addTab(username, panel);
-        
-        int indexTab=pane.indexOfTab(username);
+
+        int indexTab = pane.indexOfTab(username);
         JPanel pnlTab = new JPanel(new GridBagLayout());
         pnlTab.setOpaque(false);
-        JLabel lblTitle=new JLabel(username);
+        JLabel lblTitle = new JLabel(username);
         JButton XBtn = new JButton("X");
-        
+
         GridBagConstraints grid = new GridBagConstraints();
         grid.gridx = 0;
         grid.gridy = 0;
         grid.weightx = 1;
-        
+
         index = indexTab;
         System.out.println(index);
-        pnlTab.add(lblTitle,grid);
-        
+        pnlTab.add(lblTitle, grid);
+
         grid.gridx++;
-        
+
         grid.weightx = 0;
-        pnlTab.add(XBtn,grid);
-        
+        pnlTab.add(XBtn, grid);
+
         pane.setTabComponentAt(indexTab, pnlTab);
-        
+
         XBtn.addActionListener(new MyCloseActionHandler(username));
-                
-    }
-     public class MyCloseActionHandler implements ActionListener {
-    private String tabName;
-    
-    public MyCloseActionHandler(String tabName) {
-        this.tabName = tabName;
+
     }
 
-    public String getTabName() {
-        return tabName;
-    }
+    public class MyCloseActionHandler implements ActionListener {
 
-    @Override
-    public void actionPerformed(ActionEvent evt) {
+        private String tabName;
 
-        int index = pane.indexOfTab(getTabName());
-        if (index >= 0) {
-            
-            pane.removeTabAt(index);
+        public MyCloseActionHandler(String tabName) {
+            this.tabName = tabName;
+        }
+
+        public String getTabName() {
+            return tabName;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+
+            int index = pane.indexOfTab(getTabName());
+            if (index >= 0) {
+
+                pane.removeTabAt(index);
+            }
         }
     }
-}   
 }
